@@ -20,7 +20,7 @@ export default function Navbar() {
       <div className="mx-auto px-7 flex items-center h-32 justify-around">
         {/* Logo */}
         <Link
-          to="/"
+          to="google.com"
           className="flex items-center gap-2 shrink-0"
           aria-label="Home"
         >
