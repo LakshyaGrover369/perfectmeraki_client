@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+// import { useState, useEffect } from "react";
 import Navbar from "@/components/common/Navbar";
 
 const Home = () => {
