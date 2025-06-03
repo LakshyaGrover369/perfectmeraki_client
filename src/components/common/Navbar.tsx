@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import clsx from "clsx";
+import { Link } from "react-router-dom";
 
 const navLinks = [
   { name: "My Guide", href: "/my-guide-overview" },
@@ -17,8 +18,8 @@ export default function Navbar() {
     <nav className="w-full sticky top-0 z-30 text-sm  backdrop-blur-sm border-b border-[#e0d6c5]">
       <div className="mx-auto px-7 flex items-center h-32 justify-around">
         {/* Logo */}
-        <a
-          href="/"
+        <Link
+          to="/"
           className="flex items-center gap-2 shrink-0"
           aria-label="Home"
         >
@@ -35,37 +36,37 @@ export default function Navbar() {
             <br className="hidden md:block" />
             FINANCIAL
           </span> */}
-        </a>
+        </Link>
         {/* Desktop Nav */}
         <div className="hidden lg:flex gap-7 ml-7 flex-1 flex items-center justify-end">
           {navLinks.map((link) => (
-            <a
+            <Link
               key={link.name}
-              href={link.href}
+              to={link.href}
               className=" text-sm group relative px-0.5 py-1 font-sans text-base tracking-tight text-[#2d2926] hover:text-[#63ccbb] transition-colors duration-200 after:absolute after:left-0 after:right-0 after:-bottom-0.5 after:h-0.5 after:bg-[#63ccbb] after:scale-x-0 group-hover:after:scale-x-100 after:origin-left after:transition-transform after:duration-300 after:rounded"
             >
               {link.name}
-            </a>
+            </Link>
           ))}
           {/* Right: CTA + Icon */}
           <div className="flex items-center gap-4 ">
-            <a
-              href="/virtual-office"
+            <Link
+              to="/virtual-office"
               className="text-sm shadow-2xl rounded-full px-5 py-2 bg-[#63ccbb] text-[#2d2926] font-semibold text-base border border-[#2d2926] shadow transition-all duration-150 hover:bg-[#3ebea6] focus:outline-none focus:ring-2 focus:ring-[#2d2926] focus:ring-offset-2 text-shadow-lg"
             >
-              Schedule a meeting
-            </a>
-            <a
-              href="/question-jar"
+              Schedule Link meeting
+            </Link>
+            <Link
+              to="/question-jar"
               className="rounded-full w-10 h-10 border border-[#2d2926] flex items-center justify-center bg-white shadow-sm hover:bg-[#e0d6c5] transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-[#2d2926] focus:ring-offset-2"
-              aria-label="Have a question?"
+              aria-label="Have Link question?"
             >
               <img
                 src="https://ext.same-assets.com/368670237/1330813499.png"
                 alt="?"
                 className="w-5 h-5"
               />
-            </a>
+            </Link>
             {/* Hamburger (mobile) */}
             <button
               className="lg:hidden ml-2 focus:outline-none flex items-center justify-center"
@@ -112,26 +113,26 @@ export default function Navbar() {
         aria-hidden={!menuOpen}
       >
         {navLinks.map((link) => (
-          <a
+          <Link
             key={link.name}
-            href={link.href}
+            to={link.href}
             className="hover:text-[#63ccbb] transition-colors duration-200 mb-2 focus:outline-none"
             onClick={() => setMenuOpen(false)}
           >
             {link.name}
-          </a>
+          </Link>
         ))}
-        <a
-          href="/virtual-office"
+        <Link
+          to="/virtual-office"
           className="rounded-full px-7 py-3 mt-3 bg-[#63ccbb] text-[#2d2926] font-semibold text-lg border border-[#2d2926] shadow transition-all duration-150 hover:bg-[#3ebea6] focus:outline-none focus:ring-2 focus:ring-[#2d2926] focus:ring-offset-2"
           onClick={() => setMenuOpen(false)}
         >
-          Schedule a meeting
-        </a>
-        <a
-          href="/question-jar"
+          Schedule Link meeting
+        </Link>
+        <Link
+          to="/question-jar"
           className="rounded-full w-12 h-12 border border-[#2d2926] flex items-center justify-center bg-white shadow-sm hover:bg-[#e0d6c5] mt-4 transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-[#2d2926] focus:ring-offset-2"
-          aria-label="Have a question?"
+          aria-label="Have Link question?"
           onClick={() => setMenuOpen(false)}
         >
           <img
@@ -139,7 +140,7 @@ export default function Navbar() {
             alt="?"
             className="w-7 h-7"
           />
-        </a>
+        </Link>
       </div>
       {menuOpen && (
         <div
