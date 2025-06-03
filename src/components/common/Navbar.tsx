@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import clsx from "clsx";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 const navLinks = [
   { name: "My Guide", href: "/my-guide-overview" },
@@ -15,50 +15,44 @@ const navLinks = [
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+
   return (
-    <nav className="w-full sticky top-0 z-30 text-sm  backdrop-blur-sm border-b border-[#e0d6c5]">
+    <nav className="w-full sticky top-0 z-30 text-sm backdrop-blur-sm border-b border-[#e0d6c5]">
       <div className="mx-auto px-7 flex items-center h-32 justify-around">
         {/* Logo */}
         <Link
-          to="google.com"
-          className="flex items-center gap-2 shrink-0"
+          href="https://google.com"
           aria-label="Home"
+          className="flex items-center gap-2 shrink-0"
         >
           <img
             src="https://ext.same-assets.com/368670237/9541035.svg"
             alt="Five Pathways Logo"
             className="w-9 h-9"
           />
-          {/* <span
-            className="font-serif text-xl font-bold text-[#2d2926] hidden sm:block"
-            style={{ fontFamily: "PPEditorial New, serif" }}
-          >
-            FIVE PATHWAYS
-            <br className="hidden md:block" />
-            FINANCIAL
-          </span> */}
         </Link>
+
         {/* Desktop Nav */}
-        <div className="hidden lg:flex gap-7 ml-7 flex-1 flex items-center justify-end">
+        <div className="hidden lg:flex gap-7 ml-7 flex-1 items-center justify-end">
           {navLinks.map((link) => (
             <Link
               key={link.name}
-              to={link.href}
-              className=" text-sm group relative px-0.5 py-1 font-sans text-base tracking-tight text-[#2d2926] hover:text-[#63ccbb] transition-colors duration-200 after:absolute after:left-0 after:right-0 after:-bottom-0.5 after:h-0.5 after:bg-[#63ccbb] after:scale-x-0 group-hover:after:scale-x-100 after:origin-left after:transition-transform after:duration-300 after:rounded"
+              href={link.href}
+              className="text-sm group relative px-0.5 py-1 font-sans text-base tracking-tight text-[#2d2926] hover:text-[#63ccbb] transition-colors duration-200 after:absolute after:left-0 after:right-0 after:-bottom-0.5 after:h-0.5 after:bg-[#63ccbb] after:scale-x-0 group-hover:after:scale-x-100 after:origin-left after:transition-transform after:duration-300 after:rounded"
             >
               {link.name}
             </Link>
           ))}
-          {/* Right: CTA + Icon */}
-          <div className="flex items-center gap-4 ">
+
+          <div className="flex items-center gap-4">
             <Link
-              to="/virtual-office"
-              className="text-sm shadow-2xl rounded-full px-5 py-2 bg-[#63ccbb] text-[#2d2926] font-semibold text-base border border-[#2d2926] shadow transition-all duration-150 hover:bg-[#3ebea6] focus:outline-none focus:ring-2 focus:ring-[#2d2926] focus:ring-offset-2 text-shadow-lg"
+              href="/virtual-office"
+              className="text-sm shadow-2xl rounded-full px-5 py-2 bg-[#63ccbb] text-[#2d2926] font-semibold text-base border border-[#2d2926] shadow transition-all duration-150 hover:bg-[#3ebea6] focus:outline-none focus:ring-2 focus:ring-[#2d2926] focus:ring-offset-2"
             >
               Schedule Link meeting
             </Link>
             <Link
-              to="/question-jar"
+              href="/question-jar"
               className="rounded-full w-10 h-10 border border-[#2d2926] flex items-center justify-center bg-white shadow-sm hover:bg-[#e0d6c5] transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-[#2d2926] focus:ring-offset-2"
               aria-label="Have Link question?"
             >
@@ -68,7 +62,6 @@ export default function Navbar() {
                 className="w-5 h-5"
               />
             </Link>
-            {/* Hamburger (mobile) */}
             <button
               className="lg:hidden ml-2 focus:outline-none flex items-center justify-center"
               onClick={() => setMenuOpen((open) => !open)}
@@ -101,6 +94,7 @@ export default function Navbar() {
           </div>
         </div>
       </div>
+
       {/* Mobile Menu */}
       <div
         id="mobile-nav"
@@ -116,7 +110,7 @@ export default function Navbar() {
         {navLinks.map((link) => (
           <Link
             key={link.name}
-            to={link.href}
+            href={link.href}
             className="hover:text-[#63ccbb] transition-colors duration-200 mb-2 focus:outline-none"
             onClick={() => setMenuOpen(false)}
           >
@@ -124,14 +118,14 @@ export default function Navbar() {
           </Link>
         ))}
         <Link
-          to="/virtual-office"
+          href="/virtual-office"
           className="rounded-full px-7 py-3 mt-3 bg-[#63ccbb] text-[#2d2926] font-semibold text-lg border border-[#2d2926] shadow transition-all duration-150 hover:bg-[#3ebea6] focus:outline-none focus:ring-2 focus:ring-[#2d2926] focus:ring-offset-2"
           onClick={() => setMenuOpen(false)}
         >
           Schedule Link meeting
         </Link>
         <Link
-          to="/question-jar"
+          href="/question-jar"
           className="rounded-full w-12 h-12 border border-[#2d2926] flex items-center justify-center bg-white shadow-sm hover:bg-[#e0d6c5] mt-4 transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-[#2d2926] focus:ring-offset-2"
           aria-label="Have Link question?"
           onClick={() => setMenuOpen(false)}
@@ -143,6 +137,7 @@ export default function Navbar() {
           />
         </Link>
       </div>
+
       {menuOpen && (
         <div
           onClick={() => setMenuOpen(false)}
