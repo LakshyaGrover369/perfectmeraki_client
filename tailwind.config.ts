@@ -10,6 +10,7 @@ export default {
     extend: {
       fontFamily: {
         Kapakana: ["Kapakana", "cursive"],
+        cursive: ['"Dancing Script"', "cursive"],
       },
     },
   },

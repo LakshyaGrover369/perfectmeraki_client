@@ -2,15 +2,14 @@
 import React, { useState } from "react";
 import clsx from "clsx";
 import Link from "next/link";
+import perfectmeraki_logo from "../../public/assets/images/perfectmeraki_logo.jpg";
+import { AnimatedRevealButton } from "./AnimatedRevealButton";
 
 const navLinks = [
-  { name: "My Guide", href: "/my-guide-overview" },
-  { name: "Enlighten", href: "/enlighten" },
+  { name: "Home", href: "/home" },
+  { name: "About", href: "pages/about" },
   { name: "Services", href: "/services" },
   { name: "Products", href: "/products" },
-  { name: "Education", href: "/education" },
-  { name: "Virtual Office", href: "/virtual-office" },
-  { name: "About", href: "/about" },
 ];
 
 export default function Navbar() {
@@ -21,36 +20,46 @@ export default function Navbar() {
       <div className="mx-auto px-7 flex items-center h-32 justify-around">
         {/* Logo */}
         <Link
-          href="https://google.com"
+          href="Home"
           aria-label="Home"
           className="flex items-center gap-2 shrink-0"
         >
           <img
-            src="https://ext.same-assets.com/368670237/9541035.svg"
-            alt="Five Pathways Logo"
-            className="w-9 h-9"
+            src={perfectmeraki_logo.src}
+            alt="perfect_meraki_logo"
+            className="w-32 h-28 object-cover rounded-full shadow-lg"
           />
         </Link>
 
         {/* Desktop Nav */}
-        <div className="hidden lg:flex gap-7 ml-7 flex-1 items-center justify-end">
+        <div className="hidden lg:flex gap-16 ml-7 flex-1 items-center justify-end">
           {navLinks.map((link) => (
             <Link
               key={link.name}
               href={link.href}
-              className="text-sm group relative px-0.5 py-1 font-sans text-base tracking-tight text-[#2d2926] hover:text-[#63ccbb] transition-colors duration-200 after:absolute after:left-0 after:right-0 after:-bottom-0.5 after:h-0.5 after:bg-[#63ccbb] after:scale-x-0 group-hover:after:scale-x-100 after:origin-left after:transition-transform after:duration-300 after:rounded"
+              className="group relative inline-block overflow-hidden px-1 py-1 w-fit"
             >
-              {link.name}
+              {/* Static text (cursive on hover, fades out up) */}
+              <span className="block transition-all duration-300 group-hover:-translate-y-full group-hover:opacity-0">
+                <span className="text-base text-[#2d2926] font-sans tracking-tight">
+                  {link.name}
+                </span>
+              </span>
+
+              {/* Animated-in new text (cursive from below) */}
+              <span className="absolute left-0 top-full block transition-all duration-300 group-hover:top-0 group-hover:opacity-100 opacity-0">
+                <span className=" text-base text-[#63ccbb] font-[cursive] tracking-tight">
+                  {link.name}
+                </span>
+              </span>
             </Link>
           ))}
 
           <div className="flex items-center gap-4">
-            <Link
-              href="/virtual-office"
-              className="text-sm shadow-2xl rounded-full px-5 py-2 bg-[#63ccbb] text-[#2d2926] font-semibold text-base border border-[#2d2926] shadow transition-all duration-150 hover:bg-[#3ebea6] focus:outline-none focus:ring-2 focus:ring-[#2d2926] focus:ring-offset-2"
-            >
+            <AnimatedRevealButton href="/virtual-office">
               Schedule Link meeting
-            </Link>
+            </AnimatedRevealButton>
+
             <Link
               href="/question-jar"
               className="rounded-full w-10 h-10 border border-[#2d2926] flex items-center justify-center bg-white shadow-sm hover:bg-[#e0d6c5] transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-[#2d2926] focus:ring-offset-2"
