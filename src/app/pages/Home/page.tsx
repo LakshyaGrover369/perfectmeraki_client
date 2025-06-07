@@ -262,7 +262,7 @@ export default function Home() {
           variants={fadeInUp}
         >
           <OutlineCTAButton href="/workshops">
-            View All Collections &rarr;
+            View All Collections →
           </OutlineCTAButton>
         </motion.div>
       </section>
@@ -332,10 +332,7 @@ export default function Home() {
               <RoundedCTAButton href="/workshops">
                 Browse Workshops
               </RoundedCTAButton>
-              <OutlineCTAButton
-                href="/contact"
-                className="inline-block rounded-full border-2 border-[#5db8a8] px-6 py-3 text-[#3a8a7a] font-semibold transition hover:bg-[#f0f7f5]"
-              >
+              <OutlineCTAButton href="/contact">
                 Custom Event Inquiry
               </OutlineCTAButton>
             </div>

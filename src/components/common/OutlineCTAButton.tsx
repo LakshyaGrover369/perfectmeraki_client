@@ -8,13 +8,11 @@ import clsx from "clsx";
 interface OutlineCTAButtonProps {
   href: string;
   children: string;
-  className?: string;
 }
 
 export const OutlineCTAButton: React.FC<OutlineCTAButtonProps> = ({
   href,
   children,
-  className = "",
 }) => {
   return (
     <Link
