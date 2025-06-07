@@ -8,8 +8,8 @@ import { AnimatedRevealButton } from "./AnimatedRevealButton";
 const navLinks = [
   { name: "Home", href: "/" },
   { name: "About", href: "pages/about" },
-  { name: "Services", href: "/services" },
-  { name: "Products", href: "/products" },
+  { name: "Services", href: "pages/services" },
+  { name: "Products", href: "pages/products" },
 ];
 
 export default function Navbar() {
