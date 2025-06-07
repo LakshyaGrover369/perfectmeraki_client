@@ -6,7 +6,7 @@ import perfectmeraki_logo from "../../public/assets/images/perfectmeraki_logo.jp
 import { AnimatedRevealButton } from "./AnimatedRevealButton";
 
 const navLinks = [
-  { name: "Home", href: "/home" },
+  { name: "Home", href: "/" },
   { name: "About", href: "pages/about" },
   { name: "Services", href: "/services" },
   { name: "Products", href: "/products" },
@@ -20,7 +20,7 @@ export default function Navbar() {
       <div className="mx-auto px-7 flex items-center h-32 justify-around">
         {/* Logo */}
         <Link
-          href="Home"
+          href="/"
           aria-label="Home"
           className="flex items-center gap-2 shrink-0"
         >

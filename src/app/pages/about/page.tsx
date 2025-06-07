@@ -184,10 +184,10 @@ const AboutUs = () => {
               ✨ Creative Workshops
             </h2>
             <p className="text-xl mb-8 max-w-3xl">
-              Join our immersive workshops where art comes alive! Whether you're
-              a beginner or looking to refine your skills, our sessions in
-              mandala art, wood painting, and Lippan craft will awaken your
-              creativity.
+              Join our immersive workshops where art comes alive! Whether
+              you&#39;re a beginner or looking to refine your skills, our
+              sessions in mandala art, wood painting, and Lippan craft will
+              awaken your creativity.
             </p>
             <div className="flex flex-wrap gap-4">
               <button className="px-6 py-3 bg-white text-emerald-800 font-bold rounded-full hover:bg-gray-100 transition-all transform hover:scale-105 shadow-lg">
@@ -205,8 +205,8 @@ const AboutUs = () => {
             Every piece tells a story. Made by hand, made to last.
           </p>
           <p className="text-lg text-gray-600">
-            Ready to bring Perfect Meraki into your home? Let's create something
-            beautiful together.
+            Ready to bring Perfect Meraki into your home? Let&#39;s create
+            something beautiful together.
           </p>
         </div>
       </div>

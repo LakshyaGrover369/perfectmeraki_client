@@ -363,8 +363,8 @@ export default function Home() {
             variants={fadeInUp}
             transition={{ delay: 0.2 }}
           >
-            Whether you're looking for a custom piece or want to experience the
-            joy of creating, we're here to make it happen.
+            Whether you&#39;re looking for a custom piece or want to experience
+            the joy of creating, we&#39;re here to make it happen.
           </motion.p>
           <motion.div
             className="mt-8 flex flex-wrap justify-center gap-4"
