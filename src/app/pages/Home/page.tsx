@@ -13,6 +13,7 @@ import nameplateImg from "../../../public/assets/images/nameplate.jpg";
 import workshopImg from "../../../public/assets/gifs/shop.gif";
 import { OutlineCTAButton } from "../../../components/common/OutlineCTAButton";
 import { RoundedCTAButton } from "../../../components/common/RoundedCTAButton";
+import Footer from "@/components/common/Footer";
 
 // import Testimonials from "@/components/Testimonials";
 // import Footer from "@/components/Footer";
@@ -390,7 +391,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 }
