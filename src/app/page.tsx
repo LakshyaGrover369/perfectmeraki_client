@@ -1,10 +1,15 @@
 "use client";
 import Home from "./pages/Home/page";
 
+import { Provider } from "react-redux";
+import store from "../store/store";
+
 const HomePage = () => {
   return (
     <>
-      <Home />;
+      <Provider store={store}>
+        <Home />;
+      </Provider>
     </>
   );
 };

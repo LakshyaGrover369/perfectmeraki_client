@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Navbar from "@/components/common/Navbar";
+// import Navbar from "@/components/common/Navbar";
 import Typewriter from "typewriter-effect";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -13,7 +13,7 @@ import nameplateImg from "../../../public/assets/images/nameplate.jpg";
 import workshopImg from "../../../public/assets/gifs/shop.gif";
 import { OutlineCTAButton } from "../../../components/common/OutlineCTAButton";
 import { RoundedCTAButton } from "../../../components/common/RoundedCTAButton";
-import Footer from "@/components/common/Footer";
+// import Footer from "@/components/common/Footer";
 
 // import Testimonials from "@/components/Testimonials";
 // import Footer from "@/components/Footer";
@@ -40,16 +40,10 @@ const staggerContainer = {
 export default function Home() {
   return (
     <div className="relative flex min-h-screen flex-col bg-gradient-to-br from-[#f9f5f0] via-white to-[#f0f7f5] text-[#2d2926] overflow-hidden">
-      {/* Decorative elements */}
-      <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
-        <div className="absolute top-20 left-10 w-40 h-40 rounded-full bg-[#e0f7f3] opacity-30 blur-3xl"></div>
-        <div className="absolute bottom-40 right-20 w-60 h-60 rounded-full bg-[#f0e7db] opacity-30 blur-3xl"></div>
-      </div>
-
-      <Navbar />
-
+      {/*  */}
+      {/* <Navbar /> */}
       {/* Hero Section */}
-      <section className="relative z-10 grid w-full grid-cols-1 items-center gap-6 px-6 text-left md:grid-cols-2 md:px-10 pt-12">
+      <section className="relative z-10 grid w-full grid-cols-1 items-center gap-6 px-6 text-left md:grid-cols-2 md:px-10 ">
         <div>
           <motion.h1
             className="text-4xl font-extrabold sm:text-5xl md:text-6xl lg:text-7xl leading-tight"
@@ -132,7 +126,6 @@ export default function Home() {
           </div>
         </motion.div>
       </section>
-
       {/* Brand Promise */}
       <section className="mt-24 px-6 md:px-16">
         <motion.div
@@ -174,7 +167,6 @@ export default function Home() {
           ))}
         </motion.div>
       </section>
-
       {/* Offerings Section */}
       <section id="offerings" className="mt-32 px-6 md:px-16">
         <motion.div
@@ -267,7 +259,6 @@ export default function Home() {
           </OutlineCTAButton>
         </motion.div>
       </section>
-
       {/* Workshops Section */}
       <section className="mt-32 bg-[#f9f5f0] py-20 px-6 md:px-16">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -340,10 +331,8 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
-
       {/* Testimonials */}
       {/* <Testimonials /> */}
-
       {/* Final CTA */}
       <section className="py-20 px-6 md:px-16 bg-[#3a8a7a] text-white">
         <div className="max-w-4xl mx-auto text-center">
@@ -390,8 +379,7 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
-
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
