@@ -6,9 +6,9 @@ import { AnimatedRevealButton } from "./AnimatedRevealButton";
 
 const navLinks = [
   { name: "Home", href: "/" },
-  { name: "About", href: "pages/about" },
-  { name: "Services", href: "pages/services" },
-  { name: "Products", href: "pages/user/products" },
+  { name: "About", href: "about" },
+  { name: "Services", href: "services" },
+  { name: "Products", href: "user/products" },
 ];
 
 export default function Navbar() {
