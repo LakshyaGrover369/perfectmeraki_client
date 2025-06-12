@@ -2,7 +2,7 @@ import Image from "next/image";
 import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { RoundedCTAButton } from "@/components/common/RoundedCTAButton";
 
 // Mock service data with image URLs
@@ -62,10 +62,9 @@ const Services = () => {
   const floatingShapesRef = useRef<(HTMLDivElement | null)[]>([]);
   const serviceCardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
-  // Register GSAP plugins
-  gsap.registerPlugin(ScrollTrigger);
-
   useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
     // Floating shapes animation
     floatingShapesRef.current.forEach((shape, i) => {
       if (shape) {
