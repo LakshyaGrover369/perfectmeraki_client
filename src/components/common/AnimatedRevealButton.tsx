@@ -1,6 +1,3 @@
-// components/ui/FancyButton.tsx
-
-"use client";
 import Link from "next/link";
 import React from "react";
 
@@ -14,13 +11,9 @@ interface AnimatedRevealButtonProps {
 export const AnimatedRevealButton: React.FC<AnimatedRevealButtonProps> = ({
   href,
   children,
-  className = "",
-  hoverFont = "font-[cursive]",
+  // className = "",
+  // hoverFont = "font-[cursive]",
 }) => {
-  function clsx(arg0: string, hoverFont: string): string | undefined {
-    throw new Error("Function not implemented.");
-  }
-
   return (
     <Link
       href={href}
