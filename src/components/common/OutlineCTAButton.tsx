@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import React from "react";
-import clsx from "clsx";
 
 interface OutlineCTAButtonProps {
   href: string;
@@ -12,6 +11,10 @@ export const OutlineCTAButton: React.FC<OutlineCTAButtonProps> = ({
   href,
   children,
 }) => {
+  function clsx(...classes: (string | undefined | false | null)[]): string {
+    return classes.filter(Boolean).join(" ");
+  }
+
   return (
     <Link
       href={href}

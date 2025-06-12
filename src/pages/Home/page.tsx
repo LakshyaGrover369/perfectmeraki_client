@@ -11,8 +11,8 @@ import mandalaImg from "../../../public/assets/images/mandala.jpg";
 import lippanImg from "../../../public/assets/images/lippan.jpg";
 import nameplateImg from "../../../public/assets/images/nameplate.jpg";
 import workshopImg from "../../../public/assets/gifs/shop.gif";
-import { OutlineCTAButton } from "../../../components/common/OutlineCTAButton";
-import { RoundedCTAButton } from "../../../components/common/RoundedCTAButton";
+import { OutlineCTAButton } from "../../components/common/OutlineCTAButton";
+import { RoundedCTAButton } from "../../components/common/RoundedCTAButton";
 // import Footer from "@/components/common/Footer";
 
 // import Testimonials from "@/components/Testimonials";

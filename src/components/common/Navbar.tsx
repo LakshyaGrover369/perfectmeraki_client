@@ -1,8 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import clsx from "clsx";
 import Link from "next/link";
-import perfectmeraki_logo from "../../public/assets/images/perfectmeraki_logo.jpg";
+import perfectmeraki_logo from "../../../public/assets/images/perfectmeraki_logo.jpg";
 import { AnimatedRevealButton } from "./AnimatedRevealButton";
 
 const navLinks = [
@@ -15,8 +14,12 @@ const navLinks = [
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
+  function clsx(...classes: (string | false | null | undefined)[]): string {
+    return classes.filter(Boolean).join(" ");
+  }
+
   return (
-    <nav className="w-full sticky top-0 z-30 text-sm backdrop-blur-sm border-b border-[#e0d6c5]">
+    <nav className="w-full sticky top-0 z-30 text-sm  backdrop-blur-sm border-b border-[#e0d6c5]">
       <div className="mx-auto px-7 flex items-center h-32 justify-around">
         {/* Logo */}
         <Link

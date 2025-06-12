@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import paintingLoader from "../../../../public/assets/gifs/paint_loader.gif";
-import { API_ROUTES } from "@/app/api/APIRoutes";
+import { API_ROUTES } from "@/api/APIRoutes";
 
 interface User {
   id: string;
