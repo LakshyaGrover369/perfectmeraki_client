@@ -149,6 +149,7 @@ const SignUp = () => {
             error?.response?.data?.message ||
             "Network error. Please try again.",
         });
+        console.error("Registration error:", error);
       } finally {
         setIsSubmitting(false);
       }

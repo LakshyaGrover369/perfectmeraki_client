@@ -124,6 +124,7 @@ const SignIn = () => {
         }
       } catch (err) {
         setErrors({ general: "Something went wrong. Please try again." });
+        console.error("Login error:", err);
       } finally {
         setIsSubmitting(false);
       }
@@ -340,7 +341,7 @@ const SignIn = () => {
               transition={{ delay: 1 }}
               className="mt-6 text-center text-sm text-gray-600"
             >
-              Don't have an account?{" "}
+              Don&apos;t have an account?{" "}
               <a
                 href="#"
                 className="font-medium text-emerald-600 hover:text-emerald-500"
