@@ -1,7 +1,7 @@
 import React from "react";
-import Navbar from "../../../components/common/Navbar";
-import Footer from "../../../components/common/Footer";
-import AdminSidebar from "../../../components/common/AdminSidebar";
+// import Navbar from "../../components/common/Navbar";
+// import Footer from "../../components/common/Footer";
+import AdminSidebar from "../../components/common/AdminSidebar";
 
 import { ReactNode } from "react";
 
