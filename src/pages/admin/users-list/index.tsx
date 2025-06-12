@@ -4,6 +4,7 @@ import axios from "axios";
 import paintingLoader from "../../../../public/assets/gifs/paint_loader.gif";
 import { API_ROUTES } from "@/api/APIRoutes";
 import { useSelector } from "react-redux";
+import type { RootState } from "@/store/store";
 
 interface User {
   id: string;
@@ -18,7 +19,7 @@ const UserDetails = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   // Get token from Redux authSlice at the top level
-  const token = useSelector((state: any) => state.auth.token);
+  const token = useSelector((state: RootState) => state.auth.token);
 
   // Define table columns with correct type annotations
   const columns: TableColumn[] = [

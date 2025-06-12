@@ -122,7 +122,7 @@ const SignIn = () => {
         } else {
           setErrors({ general: "Invalid credentials" });
         }
-      } catch (err) {
+      } catch (err: unknown) {
         setErrors({ general: "Something went wrong. Please try again." });
         console.error("Login error:", err);
       } finally {

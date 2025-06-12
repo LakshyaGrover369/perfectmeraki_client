@@ -143,10 +143,10 @@ const SignUp = () => {
         } else {
           setErrors({ general: "Registration failed. Please try again." });
         }
-      } catch (error: any) {
+      } catch (error: unknown) {
         setErrors({
           general:
-            error?.response?.data?.message ||
+            (error as any)?.response?.data?.message ||
             "Network error. Please try again.",
         });
         console.error("Registration error:", error);
