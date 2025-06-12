@@ -8,9 +8,10 @@ const navLinks = [
   { name: "Home", href: "/" },
   { name: "About", href: "about" },
   { name: "Services", href: "services" },
-  { name: "Products", href: "user/products" },
+  { name: "Products", href: "products" },
   { name: "Sign In", href: "signin" },
   { name: "Sign Up", href: "signup" },
+  { name: "Admin", href: "admin/admin-dashboard" },
 ];
 
 export default function Navbar() {

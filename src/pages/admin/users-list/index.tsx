@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import paintingLoader from "../../../../public/assets/gifs/paint_loader.gif";
 import { API_ROUTES } from "@/api/APIRoutes";
+import { useSelector } from "react-redux";
 
 interface User {
   id: string;
@@ -16,6 +17,8 @@ interface User {
 const UserDetails = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
+  // Get token from Redux authSlice at the top level
+  const token = useSelector((state: any) => state.auth.token);
 
   // Define table columns with correct type annotations
   const columns: TableColumn[] = [
@@ -51,7 +54,6 @@ const UserDetails = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const token = localStorage.getItem("token");
         const response = await axios.get(`${API_ROUTES.USERS.GET_ALL}`, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -83,7 +85,7 @@ const UserDetails = () => {
     };
 
     fetchUsers();
-  }, []);
+  }, [token]);
 
   if (loading) {
     return (

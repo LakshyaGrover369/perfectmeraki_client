@@ -1,23 +1,42 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
+import { API_ROUTES } from "@/api/APIRoutes";
+
+const generateOTP = () =>
+  Math.floor(100000 + Math.random() * 900000).toString();
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
+    phoneNumber: "",
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+
+  // Verification states
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
+  const [isPhoneVerified, setIsPhoneVerified] = useState(false);
+
+  // OTP states
+  const [emailOTP, setEmailOTP] = useState("");
+  const [sentEmailOTP, setSentEmailOTP] = useState("");
+  const [emailOTPSent, setEmailOTPSent] = useState(false);
+  const [verifyingEmail, setVerifyingEmail] = useState(false);
+
+  const [phoneOTP, setPhoneOTP] = useState("");
+  const [sentPhoneOTP, setSentPhoneOTP] = useState("");
+  const [phoneOTPSent, setPhoneOTPSent] = useState(false);
+  const [verifyingPhone, setVerifyingPhone] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const floatingShapesRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     let ScrollTrigger: any;
-    let ctx: gsap.Context | undefined;
 
     const registerAndAnimate = async () => {
       if (typeof window !== "undefined") {
@@ -25,7 +44,6 @@ const SignUp = () => {
         ScrollTrigger = mod.ScrollTrigger;
         gsap.registerPlugin(ScrollTrigger);
 
-        // Floating shapes animation
         floatingShapesRef.current.forEach((shape, i) => {
           if (shape) {
             gsap.to(shape, {
@@ -38,7 +56,6 @@ const SignUp = () => {
           }
         });
 
-        // Background pulse effect on scroll
         if (containerRef.current) {
           gsap.to(containerRef.current, {
             scrollTrigger: {
@@ -56,8 +73,8 @@ const SignUp = () => {
     registerAndAnimate();
 
     return () => {
-      if (ScrollTrigger) {
-        ScrollTrigger.kill && ScrollTrigger.kill();
+      if (ScrollTrigger && ScrollTrigger.kill) {
+        ScrollTrigger.kill();
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -68,6 +85,17 @@ const SignUp = () => {
     setFormData({ ...formData, [name]: value });
     if (errors[name]) {
       setErrors({ ...errors, [name]: "" });
+    }
+    // Reset verification if email or phone changes
+    if (name === "email") {
+      setIsEmailVerified(false);
+      setEmailOTPSent(false);
+      setEmailOTP("");
+    }
+    if (name === "phoneNumber") {
+      setIsPhoneVerified(false);
+      setPhoneOTPSent(false);
+      setPhoneOTP("");
     }
   };
 
@@ -80,21 +108,107 @@ const SignUp = () => {
     if (!formData.password) newErrors.password = "Password is required";
     else if (formData.password.length < 6)
       newErrors.password = "Password must be at least 6 characters";
+    if (!formData.phoneNumber.trim())
+      newErrors.phoneNumber = "Phone number is required";
+    else if (!/^\d{10}$/.test(formData.phoneNumber))
+      newErrors.phoneNumber = "Phone number must be 10 digits";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (validateForm()) {
+    if (validateForm() && isEmailVerified && isPhoneVerified) {
       setIsSubmitting(true);
-      // Simulate API call
-      setTimeout(() => {
+      try {
+        const axios = (await import("axios")).default;
+        const response = await axios.post(
+          API_ROUTES.AUTH.REGISTER,
+          {
+            name: formData.name,
+            email: formData.email,
+            phoneNumber: formData.phoneNumber,
+            password: formData.password,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (response.data && response.data.success) {
+          setSuccess(true);
+        } else {
+          setErrors({ general: "Registration failed. Please try again." });
+        }
+      } catch (error: any) {
+        setErrors({
+          general:
+            error?.response?.data?.message ||
+            "Network error. Please try again.",
+        });
+      } finally {
         setIsSubmitting(false);
-        setSuccess(true);
-      }, 1500);
+      }
     }
+  };
+
+  // Email OTP
+  const handleSendEmailOTP = () => {
+    setVerifyingEmail(true);
+    const otp = generateOTP();
+    setSentEmailOTP(otp);
+    setTimeout(() => {
+      setEmailOTPSent(true);
+      setVerifyingEmail(false);
+      alert(`Simulated: OTP sent to email: ${otp}`); // Replace with real API
+    }, 1000);
+  };
+
+  const handleVerifyEmailOTP = () => {
+    setVerifyingEmail(true);
+    setTimeout(() => {
+      if (emailOTP === sentEmailOTP) {
+        setIsEmailVerified(true);
+        setEmailOTPSent(false);
+      } else {
+        setErrors((prev) => ({
+          ...prev,
+          email: "Invalid OTP for email",
+        }));
+      }
+      setVerifyingEmail(false);
+    }, 1000);
+  };
+
+  // Phone OTP
+  const handleSendPhoneOTP = () => {
+    setVerifyingPhone(true);
+    const otp = generateOTP();
+    setSentPhoneOTP(otp);
+    setTimeout(() => {
+      setPhoneOTPSent(true);
+      setVerifyingPhone(false);
+      alert(`Simulated: OTP sent to phone: ${otp}`); // Replace with real API
+    }, 1000);
+  };
+
+  const handleVerifyPhoneOTP = () => {
+    setVerifyingPhone(true);
+    setTimeout(() => {
+      if (phoneOTP === sentPhoneOTP) {
+        setIsPhoneVerified(true);
+        setPhoneOTPSent(false);
+      } else {
+        setErrors((prev) => ({
+          ...prev,
+          phoneNumber: "Invalid OTP for phone",
+        }));
+      }
+      setVerifyingPhone(false);
+    }, 1000);
   };
 
   return (
@@ -102,7 +216,6 @@ const SignUp = () => {
       ref={containerRef}
       className="min-h-screen bg-gradient-to-br from-emerald-50 to-green-100 flex items-center justify-center p-4 overflow-hidden relative"
     >
-      {/* Floating decorative elements */}
       {[...Array(5)].map((_, i) => (
         <div
           key={i}
@@ -206,6 +319,7 @@ const SignUp = () => {
                     )}
                   </motion.div>
 
+                  {/* Email with OTP */}
                   <motion.div
                     initial={{ x: -10, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
@@ -217,19 +331,70 @@ const SignUp = () => {
                     >
                       Email Address
                     </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      className={`w-full px-4 py-3 rounded-xl border ${
-                        errors.email
-                          ? "border-red-300 focus:ring-red-500"
-                          : "border-gray-300 focus:ring-emerald-500"
-                      } focus:outline-none focus:ring-2 transition`}
-                      placeholder="your@email.com"
-                    />
+                    <div className="flex gap-2">
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className={`w-full px-4 py-3 rounded-xl border ${
+                          errors.email
+                            ? "border-red-300 focus:ring-red-500"
+                            : "border-gray-300 focus:ring-emerald-500"
+                        } focus:outline-none focus:ring-2 transition`}
+                        placeholder="your@email.com"
+                        disabled={isEmailVerified}
+                      />
+                      {!isEmailVerified && !emailOTPSent && (
+                        <button
+                          type="button"
+                          onClick={handleSendEmailOTP}
+                          disabled={
+                            verifyingEmail ||
+                            !formData.email ||
+                            !!errors.email ||
+                            isEmailVerified
+                          }
+                          className="px-3 py-2 rounded-lg bg-emerald-500 text-white text-xs font-semibold disabled:bg-gray-300"
+                        >
+                          {verifyingEmail ? "Sending..." : "Send OTP"}
+                        </button>
+                      )}
+                      {isEmailVerified && (
+                        <span className="text-green-600 font-bold px-2 py-2">
+                          ✔
+                        </span>
+                      )}
+                    </div>
+                    {emailOTPSent && !isEmailVerified && (
+                      <div className="flex gap-2 mt-2">
+                        <input
+                          type="text"
+                          value={emailOTP}
+                          onChange={(e) => setEmailOTP(e.target.value)}
+                          maxLength={6}
+                          className="w-32 px-3 py-2 rounded-lg border border-gray-300 focus:ring-emerald-500 focus:outline-none focus:ring-2 transition"
+                          placeholder="Enter OTP"
+                        />
+                        <button
+                          type="button"
+                          onClick={handleVerifyEmailOTP}
+                          disabled={verifyingEmail || !emailOTP}
+                          className="px-3 py-2 rounded-lg bg-emerald-500 text-white text-xs font-semibold disabled:bg-gray-300"
+                        >
+                          {verifyingEmail ? "Verifying..." : "Verify OTP"}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={handleSendEmailOTP}
+                          disabled={verifyingEmail}
+                          className="px-3 py-2 rounded-lg bg-gray-200 text-xs font-semibold"
+                        >
+                          Resend
+                        </button>
+                      </div>
+                    )}
                     {errors.email && (
                       <motion.p
                         initial={{ opacity: 0, y: -5 }}
@@ -237,6 +402,94 @@ const SignUp = () => {
                         className="mt-1 text-sm text-red-600"
                       >
                         {errors.email}
+                      </motion.p>
+                    )}
+                  </motion.div>
+
+                  {/* Phone with OTP */}
+                  <motion.div
+                    initial={{ x: -10, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: 0.45 }}
+                  >
+                    <label
+                      htmlFor="phoneNumber"
+                      className="block text-sm font-medium text-gray-700 mb-1"
+                    >
+                      Phone Number
+                    </label>
+                    <div className="flex gap-2">
+                      <input
+                        type="tel"
+                        id="phoneNumber"
+                        name="phoneNumber"
+                        value={formData.phoneNumber}
+                        onChange={handleChange}
+                        className={`w-full px-4 py-3 rounded-xl border ${
+                          errors.phoneNumber
+                            ? "border-red-300 focus:ring-red-500"
+                            : "border-gray-300 focus:ring-emerald-500"
+                        } focus:outline-none focus:ring-2 transition`}
+                        placeholder="Enter 10 digit number"
+                        disabled={isPhoneVerified}
+                        maxLength={10}
+                      />
+                      {!isPhoneVerified && !phoneOTPSent && (
+                        <button
+                          type="button"
+                          onClick={handleSendPhoneOTP}
+                          disabled={
+                            verifyingPhone ||
+                            !formData.phoneNumber ||
+                            !!errors.phoneNumber ||
+                            isPhoneVerified
+                          }
+                          className="px-3 py-2 rounded-lg bg-emerald-500 text-white text-xs font-semibold disabled:bg-gray-300"
+                        >
+                          {verifyingPhone ? "Sending..." : "Send OTP"}
+                        </button>
+                      )}
+                      {isPhoneVerified && (
+                        <span className="text-green-600 font-bold px-2 py-2">
+                          ✔
+                        </span>
+                      )}
+                    </div>
+                    {phoneOTPSent && !isPhoneVerified && (
+                      <div className="flex gap-2 mt-2">
+                        <input
+                          type="text"
+                          value={phoneOTP}
+                          onChange={(e) => setPhoneOTP(e.target.value)}
+                          maxLength={6}
+                          className="w-32 px-3 py-2 rounded-lg border border-gray-300 focus:ring-emerald-500 focus:outline-none focus:ring-2 transition"
+                          placeholder="Enter OTP"
+                        />
+                        <button
+                          type="button"
+                          onClick={handleVerifyPhoneOTP}
+                          disabled={verifyingPhone || !phoneOTP}
+                          className="px-3 py-2 rounded-lg bg-emerald-500 text-white text-xs font-semibold disabled:bg-gray-300"
+                        >
+                          {verifyingPhone ? "Verifying..." : "Verify OTP"}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={handleSendPhoneOTP}
+                          disabled={verifyingPhone}
+                          className="px-3 py-2 rounded-lg bg-gray-200 text-xs font-semibold"
+                        >
+                          Resend
+                        </button>
+                      </div>
+                    )}
+                    {errors.phoneNumber && (
+                      <motion.p
+                        initial={{ opacity: 0, y: -5 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="mt-1 text-sm text-red-600"
+                      >
+                        {errors.phoneNumber}
                       </motion.p>
                     )}
                   </motion.div>
@@ -285,9 +538,11 @@ const SignUp = () => {
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       type="submit"
-                      disabled={isSubmitting}
+                      disabled={
+                        isSubmitting || !isEmailVerified || !isPhoneVerified
+                      }
                       className={`w-full py-3 px-4 rounded-xl font-bold text-white ${
-                        isSubmitting
+                        isSubmitting || !isEmailVerified || !isPhoneVerified
                           ? "bg-emerald-400 cursor-not-allowed"
                           : "bg-gradient-to-r from-emerald-500 to-green-600 hover:shadow-lg"
                       } transition-all shadow-md`}

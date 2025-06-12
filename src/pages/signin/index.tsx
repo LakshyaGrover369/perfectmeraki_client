@@ -1,6 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
+import { useAppDispatch } from "@/store/hooks";
+import { signIn } from "@/store/slices/authSlice";
+import { setUser } from "@/store/slices/userSlice";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +16,7 @@ const SignIn = () => {
 
   const containerRef = useRef<HTMLDivElement>(null);
   const floatingShapesRef = useRef<(HTMLDivElement | null)[]>([]);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     let ScrollTrigger: any;
@@ -79,14 +83,50 @@ const SignIn = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
       setIsSubmitting(true);
-      setTimeout(() => {
+      setErrors({});
+      setSuccess(false);
+
+      try {
+        const res = await fetch("http://localhost:5000/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          dispatch(
+            signIn({
+              token: data.token,
+              userDetails: {
+                id: data.user.id,
+                name: data.user.name,
+                email: data.user.email,
+                role: data.user.role,
+              },
+            })
+          );
+          dispatch(
+            setUser({
+              id: data.user.id,
+              name: data.user.name,
+              email: data.user.email,
+              role: data.user.role,
+            })
+          );
+          setSuccess(true);
+        } else {
+          setErrors({ general: "Invalid credentials" });
+        }
+      } catch (err) {
+        setErrors({ general: "Something went wrong. Please try again." });
+      } finally {
         setIsSubmitting(false);
-        setSuccess(true);
-      }, 1500);
+      }
     }
   };
 
@@ -155,7 +195,9 @@ const SignIn = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className="mt-4 px-6 py-2 bg-green-600 text-white rounded-full font-medium"
-                  onClick={() => setSuccess(false)}
+                  onClick={() => {
+                    window.location.href = "/";
+                  }}
                 >
                   Continue
                 </motion.button>
@@ -232,6 +274,16 @@ const SignIn = () => {
                       </motion.p>
                     )}
                   </motion.div>
+
+                  {errors.general && (
+                    <motion.p
+                      initial={{ opacity: 0, y: -5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="mb-2 text-sm text-red-600 text-center"
+                    >
+                      {errors.general}
+                    </motion.p>
+                  )}
 
                   <motion.div
                     initial={{ opacity: 0 }}
