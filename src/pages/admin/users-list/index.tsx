@@ -1,4 +1,4 @@
-"use client";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import paintingLoader from "../../../../public/assets/gifs/paint_loader.gif";
@@ -88,7 +88,7 @@ const UserDetails = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-[300px]">
-        <img src={paintingLoader.src} alt="Loading..." />
+        <Image src={paintingLoader.src} alt="Loading..." />
       </div>
     );
   }

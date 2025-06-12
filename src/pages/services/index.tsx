@@ -1,4 +1,4 @@
-"use client";
+import Image from "next/image";
 import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
@@ -167,7 +167,7 @@ const Services = () => {
               className="bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 border border-white/20"
             >
               <div className="h-48 overflow-hidden">
-                <img
+                <Image
                   src={service.image}
                   alt={service.title}
                   className="w-full h-full object-cover transform hover:scale-105 transition duration-500"
