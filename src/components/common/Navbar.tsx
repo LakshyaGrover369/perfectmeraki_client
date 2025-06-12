@@ -1,4 +1,4 @@
-"use client";
+import Image from "next/image";
 import React, { useState } from "react";
 import Link from "next/link";
 import perfectmeraki_logo from "../../../public/assets/images/perfectmeraki_logo.jpg";
@@ -27,7 +27,7 @@ export default function Navbar() {
           aria-label="Home"
           className="flex items-center gap-2 shrink-0"
         >
-          <img
+          <Image
             src={perfectmeraki_logo.src}
             alt="perfect_meraki_logo"
             className="w-32 h-28 object-cover rounded-full shadow-lg"
@@ -68,7 +68,7 @@ export default function Navbar() {
               className="rounded-full w-10 h-10 border border-[#2d2926] flex items-center justify-center bg-white shadow-sm hover:bg-[#e0d6c5] transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-[#2d2926] focus:ring-offset-2"
               aria-label="Have Link question?"
             >
-              <img
+              <Image
                 src="https://ext.same-assets.com/368670237/1330813499.png"
                 alt="?"
                 className="w-5 h-5"
@@ -142,7 +142,7 @@ export default function Navbar() {
           aria-label="Have Link question?"
           onClick={() => setMenuOpen(false)}
         >
-          <img
+          <Image
             src="https://ext.same-assets.com/368670237/1330813499.png"
             alt="?"
             className="w-7 h-7"
