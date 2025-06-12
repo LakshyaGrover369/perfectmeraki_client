@@ -2,9 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
 
-const SignUp = () => {
+const SignIn = () => {
   const [formData, setFormData] = useState({
-    name: "",
     email: "",
     password: "",
   });
@@ -17,7 +16,6 @@ const SignUp = () => {
 
   useEffect(() => {
     let ScrollTrigger: any;
-    let ctx: gsap.Context | undefined;
 
     const registerAndAnimate = async () => {
       if (typeof window !== "undefined") {
@@ -25,7 +23,6 @@ const SignUp = () => {
         ScrollTrigger = mod.ScrollTrigger;
         gsap.registerPlugin(ScrollTrigger);
 
-        // Floating shapes animation
         floatingShapesRef.current.forEach((shape, i) => {
           if (shape) {
             gsap.to(shape, {
@@ -38,7 +35,6 @@ const SignUp = () => {
           }
         });
 
-        // Background pulse effect on scroll
         if (containerRef.current) {
           gsap.to(containerRef.current, {
             scrollTrigger: {
@@ -60,7 +56,6 @@ const SignUp = () => {
         ScrollTrigger.kill && ScrollTrigger.kill();
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,7 +68,6 @@ const SignUp = () => {
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
-    if (!formData.name.trim()) newErrors.name = "Name is required";
     if (!formData.email.trim()) newErrors.email = "Email is required";
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email))
       newErrors.email = "Invalid email";
@@ -89,7 +83,6 @@ const SignUp = () => {
     e.preventDefault();
     if (validateForm()) {
       setIsSubmitting(true);
-      // Simulate API call
       setTimeout(() => {
         setIsSubmitting(false);
         setSuccess(true);
@@ -102,7 +95,6 @@ const SignUp = () => {
       ref={containerRef}
       className="min-h-screen bg-gradient-to-br from-emerald-50 to-green-100 flex items-center justify-center p-4 overflow-hidden relative"
     >
-      {/* Floating decorative elements */}
       {[...Array(5)].map((_, i) => (
         <div
           key={i}
@@ -139,10 +131,10 @@ const SignUp = () => {
                 transition={{ delay: 0.2 }}
                 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-green-800 mb-2"
               >
-                Join Perfect Meraki
+                Welcome Back
               </motion.h1>
               <p className="text-gray-600">
-                Create an account to unlock exclusive workshops & offers!
+                Sign in to your Perfect Meraki account
               </p>
             </div>
 
@@ -152,12 +144,12 @@ const SignUp = () => {
                 animate={{ scale: 1, opacity: 1 }}
                 className="text-center p-6 rounded-xl bg-green-50 border border-green-200"
               >
-                <div className="text-5xl mb-4">🎉</div>
+                <div className="text-5xl mb-4">🌟</div>
                 <h3 className="text-xl font-bold text-green-800 mb-2">
-                  Welcome Aboard!
+                  Signed In!
                 </h3>
                 <p className="text-green-600">
-                  Your account has been created successfully.
+                  You have successfully signed in.
                 </p>
                 <motion.button
                   whileHover={{ scale: 1.05 }}
@@ -165,7 +157,7 @@ const SignUp = () => {
                   className="mt-4 px-6 py-2 bg-green-600 text-white rounded-full font-medium"
                   onClick={() => setSuccess(false)}
                 >
-                  Continue Exploring
+                  Continue
                 </motion.button>
               </motion.div>
             ) : (
@@ -175,41 +167,6 @@ const SignUp = () => {
                     initial={{ x: -10, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ delay: 0.3 }}
-                  >
-                    <label
-                      htmlFor="name"
-                      className="block text-sm font-medium text-gray-700 mb-1"
-                    >
-                      Full Name
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      className={`w-full px-4 py-3 rounded-xl border ${
-                        errors.name
-                          ? "border-red-300 focus:ring-red-500"
-                          : "border-gray-300 focus:ring-emerald-500"
-                      } focus:outline-none focus:ring-2 transition`}
-                      placeholder="Enter your name"
-                    />
-                    {errors.name && (
-                      <motion.p
-                        initial={{ opacity: 0, y: -5 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="mt-1 text-sm text-red-600"
-                      >
-                        {errors.name}
-                      </motion.p>
-                    )}
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ x: -10, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: 0.4 }}
                   >
                     <label
                       htmlFor="email"
@@ -244,7 +201,7 @@ const SignUp = () => {
                   <motion.div
                     initial={{ x: -10, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: 0.5 }}
+                    transition={{ delay: 0.4 }}
                   >
                     <label
                       htmlFor="password"
@@ -314,10 +271,10 @@ const SignUp = () => {
                               d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                             ></path>
                           </svg>
-                          Creating Account...
+                          Signing In...
                         </span>
                       ) : (
-                        "Sign Up Now"
+                        "Sign In"
                       )}
                     </motion.button>
                   </motion.div>
@@ -331,12 +288,12 @@ const SignUp = () => {
               transition={{ delay: 1 }}
               className="mt-6 text-center text-sm text-gray-600"
             >
-              Already have an account?{" "}
+              Don't have an account?{" "}
               <a
                 href="#"
                 className="font-medium text-emerald-600 hover:text-emerald-500"
               >
-                Log in
+                Sign up
               </a>
             </motion.div>
           </div>
@@ -346,4 +303,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignIn;

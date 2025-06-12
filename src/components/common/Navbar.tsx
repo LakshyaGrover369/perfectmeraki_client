@@ -9,6 +9,8 @@ const navLinks = [
   { name: "About", href: "about" },
   { name: "Services", href: "services" },
   { name: "Products", href: "user/products" },
+  { name: "Sign In", href: "signin" },
+  { name: "Sign Up", href: "signup" },
 ];
 
 export default function Navbar() {
@@ -24,6 +26,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link
           href="/"
+          target="blank"
           aria-label="Home"
           className="flex items-center gap-2 shrink-0"
         >
@@ -61,22 +64,16 @@ export default function Navbar() {
           ))}
 
           <div className="flex items-center gap-4">
-            <AnimatedRevealButton href="/virtual-office">
-              Schedule Link meeting
+            <AnimatedRevealButton href="https://wa.link/k2vcjx">
+              Order Now
             </AnimatedRevealButton>
 
             <Link
-              href="/question-jar"
-              className="rounded-full w-10 h-10 border border-[#2d2926] flex items-center justify-center bg-white shadow-sm hover:bg-[#e0d6c5] transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-[#2d2926] focus:ring-offset-2"
+              href="https://wa.link/odndf9"
+              className="text-3xl rounded-full w-10 h-10 border border-[#2d2926] flex items-center justify-center bg-white shadow-sm hover:bg-[#e0d6c5] transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-[#2d2926] focus:ring-offset-2"
               aria-label="Have Link question?"
             >
-              <Image
-                src="https://ext.same-assets.com/368670237/1330813499.png"
-                alt="?"
-                width={28}
-                height={28}
-                className="w-5 h-5"
-              />
+              ?
             </Link>
             <button
               className="lg:hidden ml-2 focus:outline-none flex items-center justify-center"
@@ -134,11 +131,11 @@ export default function Navbar() {
           </Link>
         ))}
         <Link
-          href="/virtual-office"
+          href="https://wa.link/k2vcjx"
           className="rounded-full px-7 py-3 mt-3 bg-[#63ccbb] text-[#2d2926] font-semibold text-lg border border-[#2d2926] shadow transition-all duration-150 hover:bg-[#3ebea6] focus:outline-none focus:ring-2 focus:ring-[#2d2926] focus:ring-offset-2"
           onClick={() => setMenuOpen(false)}
         >
-          Schedule Link meeting
+          Order Now
         </Link>
         <Link
           href="/question-jar"
