@@ -88,7 +88,12 @@ const UserDetails = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-[300px]">
-        <Image src={paintingLoader.src} alt="Loading..." />
+        <Image
+          src={paintingLoader.src}
+          width={28}
+          height={28}
+          alt="Loading..."
+        />
       </div>
     );
   }

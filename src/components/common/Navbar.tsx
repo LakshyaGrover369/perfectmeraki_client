@@ -29,6 +29,8 @@ export default function Navbar() {
         >
           <Image
             src={perfectmeraki_logo.src}
+            width={20}
+            height={20}
             alt="perfect_meraki_logo"
             className="w-32 h-28 object-cover rounded-full shadow-lg"
           />
@@ -71,6 +73,8 @@ export default function Navbar() {
               <Image
                 src="https://ext.same-assets.com/368670237/1330813499.png"
                 alt="?"
+                width={28}
+                height={28}
                 className="w-5 h-5"
               />
             </Link>
@@ -145,6 +149,8 @@ export default function Navbar() {
           <Image
             src="https://ext.same-assets.com/368670237/1330813499.png"
             alt="?"
+            width={28}
+            height={28}
             className="w-7 h-7"
           />
         </Link>

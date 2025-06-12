@@ -272,6 +272,8 @@ export default function Home() {
             <div className="absolute -inset-6 rounded-2xl bg-[#5db8a8]/10 -z-10"></div>
             <Image
               src={workshopImg}
+              width={28}
+              height={28}
               alt="Creative workshop session"
               className="rounded-xl shadow-lg w-full h-auto"
             />
