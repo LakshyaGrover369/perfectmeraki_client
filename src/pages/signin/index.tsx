@@ -1,9 +1,11 @@
+"use-client";
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
 import { useAppDispatch } from "@/store/hooks";
 import { signIn } from "@/store/slices/authSlice";
 import { setUser } from "@/store/slices/userSlice";
+import { useRouter } from "next/router";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
@@ -17,6 +19,7 @@ const SignIn = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const floatingShapesRef = useRef<(HTMLDivElement | null)[]>([]);
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   useEffect(() => {
     let ScrollTrigger: any;
@@ -119,6 +122,7 @@ const SignIn = () => {
             })
           );
           setSuccess(true);
+          router.push("/admin/admin-dashboard");
         } else {
           setErrors({ general: "Invalid credentials" });
         }

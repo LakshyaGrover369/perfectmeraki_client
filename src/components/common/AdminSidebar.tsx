@@ -24,6 +24,7 @@ const AdminSidebar: React.FC = () => {
         position: "fixed",
         left: 0,
         top: "9.7vh",
+        zIndex: 10,
       }}
     >
       <div

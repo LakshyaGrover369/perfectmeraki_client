@@ -10,49 +10,48 @@ const AboutUs = () => {
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
+    // Floating leaves animation
+    leafRefs.current.forEach((leaf, i) => {
+      if (leaf) {
+        gsap.to(leaf, {
+          y: i % 2 === 0 ? -20 : 20,
+          duration: 3,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        });
+      }
+    });
 
-    // Register animations only if we're in the browser
-    if (typeof window !== "undefined") {
-      // Floating leaves animation
-      leafRefs.current.forEach((leaf, i) => {
-        if (leaf) {
-          gsap.to(leaf, {
-            y: i % 2 === 0 ? -20 : 20,
-            duration: 3,
-            repeat: -1,
-            yoyo: true,
-            ease: "sine.inOut",
-          });
-        }
-      });
-
-      // Heading animation
+    // Heading animation
+    if (headingRef.current) {
       gsap.from(headingRef.current, {
         opacity: 0,
         y: 50,
         duration: 1.5,
         ease: "power3.out",
       });
+    }
 
-      // Card animations
-      cardRefs.current.forEach((card, i) => {
-        if (card) {
-          gsap.from(card, {
-            scrollTrigger: {
-              trigger: card,
-              start: "top 80%",
-              toggleActions: "play none none none",
-            },
-            opacity: 0,
-            x: i % 2 === 0 ? -50 : 50,
-            duration: 1,
-            ease: "back.out(1.7)",
-          });
-        }
-      });
+    // Card animations
+    cardRefs.current.forEach((card, i) => {
+      if (card) {
+        gsap.from(card, {
+          scrollTrigger: {
+            trigger: card,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          },
+          opacity: 0,
+          x: i % 2 === 0 ? -50 : 50,
+          duration: 1,
+          ease: "back.out(1.7)",
+        });
+      }
+    });
 
-      // Background pulse animation
+    // Background pulse animation
+    if (sectionRef.current) {
       gsap.to(sectionRef.current, {
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -65,7 +64,6 @@ const AboutUs = () => {
       });
     }
   }, []);
-
   return (
     <div
       ref={sectionRef}
