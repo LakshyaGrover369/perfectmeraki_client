@@ -41,11 +41,14 @@ export default function Navbar() {
             className="flex items-center gap-2 shrink-0 bg-transparent border-none p-0"
           >
             <Image
-              src={perfectmeraki_logo.src}
-              width={20}
-              height={20}
+              src={perfectmeraki_logo}
+              width={128}
+              height={112}
               alt="perfect_meraki_logo"
               className="w-32 h-28 object-cover rounded-full shadow-lg"
+              priority
+              unoptimized
+              style={{ imageRendering: "auto" }}
             />
           </button>
 
