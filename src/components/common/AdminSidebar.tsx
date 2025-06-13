@@ -23,7 +23,6 @@ const AdminSidebar: React.FC = () => {
         flexDirection: "column",
         position: "fixed",
         left: 0,
-        top: "9.7vh",
         zIndex: 10,
       }}
     >
