@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import {
   FaInstagram,
   FaTwitter,
@@ -9,6 +10,8 @@ import { MdEmail } from "react-icons/md";
 import { IoCall } from "react-icons/io5";
 
 export default function Footer() {
+  const router = useRouter();
+
   return (
     <footer className="relative z-10 bg-black text-white pt-16 pb-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -16,11 +19,14 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Brand Info */}
           <div className="space-y-6">
-            <Link href="/" className="flex items-center">
+            <button
+              onClick={() => router.push("/")}
+              className="flex items-center focus:outline-none"
+            >
               <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-green-600">
                 Perfect Meraki
               </span>
-            </Link>
+            </button>
             <p className="text-gray-400 text-sm leading-relaxed">
               Crafting digital experiences that inspire and transform. We blend
               creativity with technology to bring your vision to life.
@@ -60,44 +66,44 @@ export default function Footer() {
             </h3>
             <ul className="space-y-3">
               <li>
-                <Link
-                  href="/about"
-                  className="text-gray-400 hover:text-emerald-400 transition-colors duration-300 text-sm"
+                <button
+                  onClick={() => router.push("/about")}
+                  className="text-gray-400 hover:text-emerald-400 transition-colors duration-300 text-sm text-left w-full"
                 >
                   About Us
-                </Link>
+                </button>
               </li>
               <li>
-                <Link
-                  href="/services"
-                  className="text-gray-400 hover:text-emerald-400 transition-colors duration-300 text-sm"
+                <button
+                  onClick={() => router.push("/services")}
+                  className="text-gray-400 hover:text-emerald-400 transition-colors duration-300 text-sm text-left w-full"
                 >
                   Services
-                </Link>
+                </button>
               </li>
               <li>
-                <Link
-                  href="/portfolio"
-                  className="text-gray-400 hover:text-emerald-400 transition-colors duration-300 text-sm"
+                <button
+                  onClick={() => router.push("/portfolio")}
+                  className="text-gray-400 hover:text-emerald-400 transition-colors duration-300 text-sm text-left w-full"
                 >
                   Portfolio
-                </Link>
+                </button>
               </li>
               <li>
-                <Link
-                  href="/blog"
-                  className="text-gray-400 hover:text-emerald-400 transition-colors duration-300 text-sm"
+                <button
+                  onClick={() => router.push("/blog")}
+                  className="text-gray-400 hover:text-emerald-400 transition-colors duration-300 text-sm text-left w-full"
                 >
                   Blog
-                </Link>
+                </button>
               </li>
               <li>
-                <Link
-                  href="/contact"
-                  className="text-gray-400 hover:text-emerald-400 transition-colors duration-300 text-sm"
+                <button
+                  onClick={() => router.push("/contact")}
+                  className="text-gray-400 hover:text-emerald-400 transition-colors duration-300 text-sm text-left w-full"
                 >
                   Contact
-                </Link>
+                </button>
               </li>
             </ul>
           </div>
@@ -109,44 +115,44 @@ export default function Footer() {
             </h3>
             <ul className="space-y-3">
               <li>
-                <Link
-                  href="/services/web-development"
-                  className="text-gray-400 hover:text-emerald-400 transition-colors duration-300 text-sm"
+                <button
+                  onClick={() => router.push("/services/web-development")}
+                  className="text-gray-400 hover:text-emerald-400 transition-colors duration-300 text-sm text-left w-full"
                 >
                   Web Development
-                </Link>
+                </button>
               </li>
               <li>
-                <Link
-                  href="/services/ui-ux-design"
-                  className="text-gray-400 hover:text-emerald-400 transition-colors duration-300 text-sm"
+                <button
+                  onClick={() => router.push("/services/ui-ux-design")}
+                  className="text-gray-400 hover:text-emerald-400 transition-colors duration-300 text-sm text-left w-full"
                 >
                   UI/UX Design
-                </Link>
+                </button>
               </li>
               <li>
-                <Link
-                  href="/services/mobile-apps"
-                  className="text-gray-400 hover:text-emerald-400 transition-colors duration-300 text-sm"
+                <button
+                  onClick={() => router.push("/services/mobile-apps")}
+                  className="text-gray-400 hover:text-emerald-400 transition-colors duration-300 text-sm text-left w-full"
                 >
                   Mobile Applications
-                </Link>
+                </button>
               </li>
               <li>
-                <Link
-                  href="/services/digital-marketing"
-                  className="text-gray-400 hover:text-emerald-400 transition-colors duration-300 text-sm"
+                <button
+                  onClick={() => router.push("/services/digital-marketing")}
+                  className="text-gray-400 hover:text-emerald-400 transition-colors duration-300 text-sm text-left w-full"
                 >
                   Digital Marketing
-                </Link>
+                </button>
               </li>
               <li>
-                <Link
-                  href="/services/branding"
-                  className="text-gray-400 hover:text-emerald-400 transition-colors duration-300 text-sm"
+                <button
+                  onClick={() => router.push("/services/branding")}
+                  className="text-gray-400 hover:text-emerald-400 transition-colors duration-300 text-sm text-left w-full"
                 >
                   Branding
-                </Link>
+                </button>
               </li>
             </ul>
           </div>
@@ -231,24 +237,24 @@ export default function Footer() {
             reserved.
           </p>
           <div className="flex justify-center space-x-6 mt-4">
-            <Link
-              href="/privacy-policy"
+            <button
+              onClick={() => router.push("/privacy-policy")}
               className="text-gray-500 hover:text-emerald-400 text-sm transition-colors duration-300"
             >
               Privacy Policy
-            </Link>
-            <Link
-              href="/terms-of-service"
+            </button>
+            <button
+              onClick={() => router.push("/terms-of-service")}
               className="text-gray-500 hover:text-emerald-400 text-sm transition-colors duration-300"
             >
               Terms of Service
-            </Link>
-            <Link
-              href="/cookies"
+            </button>
+            <button
+              onClick={() => router.push("/cookies")}
               className="text-gray-500 hover:text-emerald-400 text-sm transition-colors duration-300"
             >
               Cookie Policy
-            </Link>
+            </button>
           </div>
         </div>
       </div>

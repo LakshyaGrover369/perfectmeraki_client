@@ -3,13 +3,13 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
 import { API_ROUTES } from "@/api/APIRoutes";
-const router =
-  require("next/router").useRouter?.() || require("next/router").default;
+import { useRouter } from "next/router";
 
 const generateOTP = () =>
   Math.floor(100000 + Math.random() * 900000).toString();
 
 const SignUp = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -282,9 +282,7 @@ const SignUp = () => {
                   className="mt-4 px-6 py-2 bg-green-600 text-white rounded-full font-medium"
                   onClick={() => {
                     // Use next/router to navigate to /signin
-                    if (router && typeof router.push === "function") {
-                      router.push("/signin");
-                    }
+                    router.push("/signin");
                   }}
                 >
                   Continue Exploring

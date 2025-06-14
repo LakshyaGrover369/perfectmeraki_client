@@ -5,7 +5,9 @@ import { useRouter } from "next/router";
 const sidebarItems = [
   { label: "Dashboard", icon: "🏠", route: "/admin/admin-dashboard" },
   { label: "Users", icon: "👥", route: "/admin/users-list" },
+  { label: "Update Catalogue", icon: "👥", route: "/admin/update-catalogue" },
   { label: "Add Products", icon: "🛒", route: "/admin/add-product" },
+  { label: "Products List", icon: "🛒", route: "/admin/products-list" },
 ];
 
 const AdminSidebar: React.FC = () => {
