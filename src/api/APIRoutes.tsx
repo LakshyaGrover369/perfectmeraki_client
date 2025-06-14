@@ -7,6 +7,12 @@ export const API_ROUTES = {
     GET_BY_ID: (userId: string) =>
       `${BASE_URL}/api/users/getUserById/${userId}`,
   },
+  PRODUCTS: {
+    EDIT: (productId: string) => `${BASE_URL}/api/admin/edit/${productId}`,
+    ADD: `${BASE_URL}/api/admin/addProduct`,
+    DELETE: (productId: string) => `${BASE_URL}/api/admin/delete/${productId}`,
+    GET_BY_TYPE: `${BASE_URL}api/admin/getProductsByType$`,
+  },
   AUTH: {
     LOGIN: `${BASE_URL}/api/auth/login`,
     REGISTER: `${BASE_URL}/api/auth/register`,

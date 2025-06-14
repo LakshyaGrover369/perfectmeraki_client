@@ -37,10 +37,6 @@ const UserDetails = () => {
       accessor: "phoneNumber",
     },
     {
-      header: "Batch Number",
-      accessor: "BatchNumber",
-    },
-    {
       header: "Last Login",
       accessor: "lastLogin",
     },
