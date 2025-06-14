@@ -1,15 +1,16 @@
 "use client";
 import React from "react";
+import { useRouter } from "next/router";
 
 const sidebarItems = [
-  { label: "Dashboard", icon: "🏠" },
-  { label: "Users", icon: "👥" },
-  { label: "Orders", icon: "📦" },
-  { label: "Products", icon: "🛒" },
-  { label: "Settings", icon: "⚙️" },
+  { label: "Dashboard", icon: "🏠", route: "/admin/admin-dashboard" },
+  { label: "Users", icon: "👥", route: "/admin/users-list" },
+  { label: "Add Products", icon: "🛒", route: "/admin/add-product" },
 ];
 
 const AdminSidebar: React.FC = () => {
+  const router = useRouter();
+
   return (
     <aside
       style={{
@@ -48,6 +49,7 @@ const AdminSidebar: React.FC = () => {
                 cursor: "pointer",
                 transition: "background 0.2s",
               }}
+              onClick={() => router.push(item.route)}
               onMouseOver={(e) =>
                 (e.currentTarget.style.background = "#219150")
               }
