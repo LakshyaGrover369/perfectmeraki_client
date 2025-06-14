@@ -64,8 +64,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   return (
     <motion.div
-      ref={cardRef}
-      initial={{ opacity: 0 }}
+      //   ref={cardRef}
+      initial={{ opacity: 1 }}
       animate={{ opacity: 1 }}
       whileHover={{ scale: 1.02 }}
       onHoverStart={handleHover}

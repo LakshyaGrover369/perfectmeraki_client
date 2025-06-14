@@ -25,28 +25,36 @@ const AboutUs = () => {
 
     // Heading animation
     if (headingRef.current) {
-      gsap.from(headingRef.current, {
-        opacity: 0,
-        y: 50,
-        duration: 1.5,
-        ease: "power3.out",
-      });
+      gsap.fromTo(
+        headingRef.current,
+        { opacity: 0, y: 50 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1.5,
+          ease: "power3.out",
+        }
+      );
     }
 
     // Card animations
     cardRefs.current.forEach((card, i) => {
       if (card) {
-        gsap.from(card, {
-          scrollTrigger: {
-            trigger: card,
-            start: "top 80%",
-            toggleActions: "play none none none",
-          },
-          opacity: 0,
-          x: i % 2 === 0 ? -50 : 50,
-          duration: 1,
-          ease: "back.out(1.7)",
-        });
+        gsap.fromTo(
+          card,
+          { opacity: 0, x: i % 2 === 0 ? -50 : 50 },
+          {
+            scrollTrigger: {
+              trigger: card,
+              start: "top 80%",
+              toggleActions: "play none none none",
+            },
+            opacity: 1,
+            x: 0,
+            duration: 1,
+            ease: "back.out(1.7)",
+          }
+        );
       }
     });
 
@@ -188,10 +196,20 @@ const AboutUs = () => {
               awaken your creativity.
             </p>
             <div className="flex flex-wrap gap-4">
-              <button className="px-6 py-3 bg-white text-emerald-800 font-bold rounded-full hover:bg-gray-100 transition-all transform hover:scale-105 shadow-lg">
+              <button
+                className="px-6 py-3 bg-white text-emerald-800 font-bold rounded-full hover:bg-gray-100 transition-all transform hover:scale-105 shadow-lg"
+                onClick={() => {
+                  window.open("https://wa.link/zd0hs9", "_blank");
+                }}
+              >
                 Book a Workshop
               </button>
-              <button className="px-6 py-3 border-2 border-white text-white font-bold rounded-full hover:bg-white/10 transition-all transform hover:scale-105">
+              <button
+                className="px-6 py-3 border-2 border-white text-white font-bold rounded-full hover:bg-white/10 transition-all transform hover:scale-105"
+                onClick={() => {
+                  window.open("https://wa.link/13h504", "_blank");
+                }}
+              >
                 Custom Order
               </button>
             </div>

@@ -31,7 +31,7 @@ const staggerContainer = {
   },
 };
 
-const NameplatesPage: React.FC = () => {
+const SpiritualHangingsPage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -85,7 +85,7 @@ const NameplatesPage: React.FC = () => {
       {/* Content Area */}
       <div className="max-w-7xl mx-auto">
         {/* Loading State */}
-        {/* <AnimatePresence>
+        <AnimatePresence>
           {loading && (
             <motion.div
               initial={{ opacity: 0 }}
@@ -97,10 +97,10 @@ const NameplatesPage: React.FC = () => {
               <p className="text-gray-600 text-lg">Loading our collection...</p>
             </motion.div>
           )}
-        </AnimatePresence> */}
+        </AnimatePresence>
 
         {/* Error State */}
-        {/* <AnimatePresence>
+        <AnimatePresence>
           {error && !loading && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -120,7 +120,7 @@ const NameplatesPage: React.FC = () => {
               </button>
             </motion.div>
           )}
-        </AnimatePresence> */}
+        </AnimatePresence>
 
         {/* Product Grid */}
         <AnimatePresence>
@@ -165,12 +165,12 @@ const NameplatesPage: React.FC = () => {
       </div>
 
       {/* Floating decorative elements */}
-      {/* <div className="fixed top-0 left-0 w-full h-full pointer-events-none -z-10 overflow-hidden">
+      <div className="fixed top-0 left-0 w-full h-full pointer-events-none -z-10 overflow-hidden">
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-indigo-100 rounded-full opacity-10 blur-xl"></div>
         <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-purple-100 rounded-full opacity-10 blur-xl"></div>
-      </div> */}
+      </div>
     </div>
   );
 };
 
-export default NameplatesPage;
+export default SpiritualHangingsPage;

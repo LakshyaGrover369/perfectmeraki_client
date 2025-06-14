@@ -586,7 +586,6 @@ const SignUp = () => {
                 </div>
               </form>
             )}
-
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -597,6 +596,10 @@ const SignUp = () => {
               <a
                 href="#"
                 className="font-medium text-emerald-600 hover:text-emerald-500"
+                onClick={(e) => {
+                  e.preventDefault();
+                  router.push("/signin");
+                }}
               >
                 Log in
               </a>

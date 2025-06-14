@@ -32,8 +32,8 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="w-full sticky top-0 z-30 text-sm  backdrop-blur-sm border-b border-[#e0d6c5]">
-        <div className="mx-auto px-7 flex items-center h-32 justify-around">
+      <nav className="w-full sticky top-0 z-30 text-sm bg-white border-b border-[#e0d6c5]">
+        <div className="mx-auto px-7 flex items-center h-24 justify-around">
           {/* Logo */}
           <button
             type="button"
@@ -43,10 +43,8 @@ export default function Navbar() {
           >
             <Image
               src={perfectmeraki_logo}
-              width={128}
-              height={112}
               alt="perfect_meraki_logo"
-              className="w-32 h-28 object-cover rounded-full shadow-lg"
+              className="w-22 h-16 object-cover rounded-full shadow-lg"
               priority
               unoptimized
               style={{ imageRendering: "auto" }}

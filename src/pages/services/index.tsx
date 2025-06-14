@@ -62,9 +62,10 @@ const Services = () => {
   const floatingShapesRef = useRef<(HTMLDivElement | null)[]>([]);
   const serviceCardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
-  useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
+  // Register GSAP plugins
+  gsap.registerPlugin(ScrollTrigger);
 
+  useEffect(() => {
     // Floating shapes animation
     floatingShapesRef.current.forEach((shape, i) => {
       if (shape) {
@@ -81,18 +82,20 @@ const Services = () => {
     // Service cards animation on scroll
     serviceCardsRef.current.forEach((card, i) => {
       if (card) {
-        gsap.from(card, {
+        gsap.to(card, {
           scrollTrigger: {
             trigger: card,
             start: "top 80%",
             toggleActions: "play none none none",
           },
-          opacity: 0,
-          y: 50,
+          opacity: 1,
+          y: 0,
           duration: 0.8,
           delay: i * 0.1,
           ease: "back.out(1.2)",
         });
+        // Set initial state
+        gsap.set(card, { opacity: 0, y: 50 });
       }
     });
 

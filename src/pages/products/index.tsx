@@ -101,23 +101,23 @@ const Products = () => {
   ];
 
   return (
-    <section className="relative w-full flex justify-center items-center py-28 px-6 md:px-16 bg-gradient-to-b from-[#faf9f7] to-[#f5f3f0] overflow-hidden">
+    <section className="relative w-full flex justify-center items-center pt-12 pb-16 px-6 md:px-16 bg-gradient-to-b from-[#faf9f7] to-[#f5f3f0] overflow-hidden">
       {/* Decorative elements */}
       <div className="absolute top-0 left-0 w-full h-full opacity-10">
         <div className="absolute top-20 left-10 w-40 h-40 rounded-full bg-purple-300 mix-blend-multiply filter blur-xl animate-float"></div>
         <div className="absolute bottom-10 right-20 w-60 h-60 rounded-full bg-amber-200 mix-blend-multiply filter blur-xl animate-float-delay"></div>
       </div>
 
-      <div className="relative max-w-7xl mx-auto">
+      <div className="relative text-center max-w-7xl mx-auto">
         <motion.div
           ref={ref}
           initial="hidden"
           animate={controls}
           variants={fadeInUp}
-          className="mb-24 text-center"
+          className="mb-16 text-center"
         >
           <motion.h1
-            className="text-5xl md:text-7xl font-bold text-[#2d2926] mb-6 tracking-tight leading-tight"
+            className="text-3xl md:text-5xl md:text-7xl font-bold text-[#2d2926] mb-6 tracking-tight leading-tight"
             whileHover={{ scale: 1.02 }}
           >
             <span className="relative inline-block">
@@ -160,29 +160,31 @@ const Products = () => {
                   className={`absolute top-0 left-0 w-full h-1 ${item.color}`}
                 ></div>
 
-                <h3 className="text-2xl font-bold text-[#2d2926] mb-3 tracking-tight leading-tight">
+                <h3 className="text-2xl text-center font-bold text-[#2d2926] mb-3 tracking-tight leading-tight">
                   {item.name}
                 </h3>
 
-                <p className="text-gray-600 mb-6 min-h-[60px]">
+                <p className="text-gray-600 text-center mb-6 min-h-[60px]">
                   {item.description}
                 </p>
 
-                <motion.button
-                  whileHover={{ x: 5 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() =>
-                    router.push(
-                      `/products/${item.name
-                        .toLowerCase()
-                        .replace(/\s+/g, "-")}`
-                    )
-                  }
-                  className="flex items-center gap-2 text-[#2d2926] group-hover:text-[#4a044e] transition-colors font-medium"
-                >
-                  <span>View Collection</span>
-                  <FiArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </motion.button>
+                <div className="flex justify-center">
+                  <motion.button
+                    whileHover={{ x: 5 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() =>
+                      router.push(
+                        `/products/${item.name
+                          .toLowerCase()
+                          .replace(/\s+/g, "-")}`
+                      )
+                    }
+                    className="flex text-center items-center gap-2 text-[#2d2926] group-hover:text-[#4a044e] transition-colors font-medium"
+                  >
+                    <span>View Collection</span>
+                    <FiArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </motion.button>
+                </div>
               </motion.div>
 
               {/* Decorative background element */}
