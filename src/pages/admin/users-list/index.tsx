@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -55,6 +56,7 @@ const UserDetails = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
+        console.log("api route", API_ROUTES.USERS.GET_ALL);
         const response = await axios.get(`${API_ROUTES.USERS.GET_ALL}`, {
           headers: {
             Authorization: `Bearer ${token}`,

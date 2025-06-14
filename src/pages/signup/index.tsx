@@ -3,6 +3,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
 import { API_ROUTES } from "@/api/APIRoutes";
+const router =
+  require("next/router").useRouter?.() || require("next/router").default;
 
 const generateOTP = () =>
   Math.floor(100000 + Math.random() * 900000).toString();
@@ -278,7 +280,12 @@ const SignUp = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className="mt-4 px-6 py-2 bg-green-600 text-white rounded-full font-medium"
-                  onClick={() => setSuccess(false)}
+                  onClick={() => {
+                    // Use next/router to navigate to /signin
+                    if (router && typeof router.push === "function") {
+                      router.push("/signin");
+                    }
+                  }}
                 >
                   Continue Exploring
                 </motion.button>
