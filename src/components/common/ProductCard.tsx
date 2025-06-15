@@ -8,17 +8,23 @@ import { RoundedCTAButton } from "./RoundedCTAButton";
 interface ProductCardProps {
   image: string;
   type: string;
+  name: string;
   description: string;
   originalPrice: number;
   discountedPrice: number;
+  orderLink: string;
+  customizationLink: string;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
   image,
   type,
+  name,
   description,
   originalPrice,
   discountedPrice,
+  orderLink,
+  customizationLink,
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const priceRef = useRef<HTMLDivElement>(null);
@@ -91,7 +97,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
       <div className="p-5">
         {/* Product type */}
-        <h3 className="text-xl font-bold text-gray-800 mb-1">{type}</h3>
+        <h3 className="text-xl font-bold text-gray-800 mb-1">{name}</h3>
+        <h2 className="text-xl font-bold text-gray-800 mb-1">{type}</h2>
 
         {/* Description */}
         <p className="text-sm text-gray-600 mb-4 min-h-[40px]">{description}</p>
@@ -108,8 +115,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
         {/* Action buttons */}
         <div className="flex gap-2">
-          <RoundedCTAButton href="/order-now">Order Now</RoundedCTAButton>
-          <OutlineCTAButton href="/customize">Customize Now</OutlineCTAButton>
+          <RoundedCTAButton href={orderLink}>Order Now</RoundedCTAButton>
+          <OutlineCTAButton href={customizationLink}>
+            Customize Now
+          </OutlineCTAButton>
         </div>
 
         {/* Additional info */}

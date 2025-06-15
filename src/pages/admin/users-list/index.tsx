@@ -64,6 +64,7 @@ const UserDetails = () => {
             lastLogin: user.lastLogin ? formatDateTime(user.lastLogin) : "",
           }));
         }
+        // Function to format date and time
 
         function formatDateTime(dateString: string) {
           const date = new Date(dateString);
@@ -156,9 +157,6 @@ const UserDetails = () => {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {user.phoneNumber}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {user.BatchNumber}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {user.lastLogin}

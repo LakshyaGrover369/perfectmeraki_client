@@ -8,11 +8,14 @@ import { FiAlertCircle, FiLoader } from "react-icons/fi";
 
 type Product = {
   _id: string;
+  name: string;
   image: string;
   type: string;
   description: string;
   originalPrice: number;
   discountedPrice: number;
+  customizationLink: string;
+  orderLink: string;
 };
 
 const fadeIn = {
@@ -44,7 +47,7 @@ const MandalaMirrorsPage: React.FC = () => {
       try {
         const response = await axios.post(
           "http://localhost:5000/api/admin/getProductsByType",
-          { type: "" },
+          { type: "mandala mirrors" },
           {
             headers: {
               "Content-Type": "application/json",
@@ -142,9 +145,12 @@ const MandalaMirrorsPage: React.FC = () => {
                     <ProductCard
                       image={product.image}
                       type={product.type}
+                      name={product.name}
                       description={product.description}
                       originalPrice={product.originalPrice}
                       discountedPrice={product.discountedPrice}
+                      orderLink={`${product.name}`}
+                      customizationLink={`/customize/${product._id}`}
                     />
                   </motion.div>
                 ))
