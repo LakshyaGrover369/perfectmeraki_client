@@ -73,7 +73,7 @@ const ProductDetails = () => {
     const fetchProducts = async () => {
       try {
         const response = await axios.post(
-          "http://localhost:5000/api/admin/getProductsByType",
+          `${API_ROUTES.PRODUCTS.GET_BY_TYPE}`,
           { type: "" },
           {
             headers: {

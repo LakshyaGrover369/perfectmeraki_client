@@ -35,7 +35,7 @@ const staggerContainer = {
   },
 };
 
-const KidsSpecialPage: React.FC = () => {
+const SpiritualHangingsPage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -48,7 +48,7 @@ const KidsSpecialPage: React.FC = () => {
       try {
         const response = await axios.post(
           `${API_ROUTES.PRODUCTS.GET_BY_TYPE}`,
-          { type: "kids special" },
+          { type: "key holders" },
           {
             headers: {
               "Content-Type": "application/json",
@@ -180,4 +180,4 @@ const KidsSpecialPage: React.FC = () => {
   );
 };
 
-export default KidsSpecialPage;
+export default SpiritualHangingsPage;

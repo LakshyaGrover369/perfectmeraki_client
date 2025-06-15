@@ -5,14 +5,18 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import ProductCard from "@/components/common/ProductCard";
 import { FiAlertCircle, FiLoader } from "react-icons/fi";
+import { API_ROUTES } from "@/api/APIRoutes";
 
 type Product = {
   _id: string;
+  name: string;
   image: string;
   type: string;
   description: string;
   originalPrice: number;
   discountedPrice: number;
+  orderLink: string;
+  customizationLink: string;
 };
 
 const fadeIn = {
@@ -43,8 +47,8 @@ const JarokhaPage: React.FC = () => {
       setError(null);
       try {
         const response = await axios.post(
-          "http://localhost:5000/api/admin/getProductsByType",
-          { type: "" },
+          `${API_ROUTES.PRODUCTS.GET_BY_TYPE}`,
+          { type: "jarokha" },
           {
             headers: {
               "Content-Type": "application/json",
@@ -142,9 +146,12 @@ const JarokhaPage: React.FC = () => {
                     <ProductCard
                       image={product.image}
                       type={product.type}
+                      name={product.name}
                       description={product.description}
                       originalPrice={product.originalPrice}
                       discountedPrice={product.discountedPrice}
+                      orderLink=""
+                      customizationLink=""
                     />
                   </motion.div>
                 ))

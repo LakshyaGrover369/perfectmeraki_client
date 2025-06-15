@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import ProductCard from "@/components/common/ProductCard";
 import { FiAlertCircle, FiLoader } from "react-icons/fi";
+import { API_ROUTES } from "@/api/APIRoutes";
 
 type Product = {
   _id: string;
@@ -14,8 +15,8 @@ type Product = {
   description: string;
   originalPrice: number;
   discountedPrice: number;
-  customizationLink: string;
   orderLink: string;
+  customizationLink: string;
 };
 
 const fadeIn = {
@@ -45,8 +46,9 @@ const MandalaMirrorsPage: React.FC = () => {
       setLoading(true);
       setError(null);
       try {
+        console.log("api:", API_ROUTES.PRODUCTS.GET_BY_TYPE);
         const response = await axios.post(
-          "http://localhost:5000/api/admin/getProductsByType",
+          `${API_ROUTES.PRODUCTS.GET_BY_TYPE}`,
           { type: "mandala mirrors" },
           {
             headers: {
@@ -55,8 +57,10 @@ const MandalaMirrorsPage: React.FC = () => {
             },
           }
         );
+        console.log("Fetched products:", response.data);
         setProducts(response.data.data || []);
       } catch (err: any) {
+        console.error("Error fetching products:", err);
         setError("Failed to fetch products. Please try again later.");
       } finally {
         setLoading(false);
@@ -149,8 +153,8 @@ const MandalaMirrorsPage: React.FC = () => {
                       description={product.description}
                       originalPrice={product.originalPrice}
                       discountedPrice={product.discountedPrice}
-                      orderLink={`${product.name}`}
-                      customizationLink={`/customize/${product._id}`}
+                      orderLink=""
+                      customizationLink=""
                     />
                   </motion.div>
                 ))

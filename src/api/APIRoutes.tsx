@@ -11,13 +11,13 @@ export const API_ROUTES = {
     EDIT: (productId: string) => `${BASE_URL}/api/admin/edit/${productId}`,
     ADD: `${BASE_URL}/api/admin/addProduct`,
     DELETE: (productId: string) => `${BASE_URL}/api/admin/delete/${productId}`,
-    GET_BY_TYPE: `${BASE_URL}api/admin/getProductsByType$`,
+    GET_BY_TYPE: `${BASE_URL}/api/admin/getProductsByType`,
   },
   AUTH: {
     LOGIN: `${BASE_URL}/api/auth/login`,
     REGISTER: `${BASE_URL}/api/auth/register`,
   },
   CATALOGUE: {
-    UPDATE: `${BASE_URL}/api/catalogue/updateCatalogue`,
+    UPDATE: `${BASE_URL}/api/admin/updateCatalogue`,
   },
 };

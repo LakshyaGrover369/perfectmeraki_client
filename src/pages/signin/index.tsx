@@ -6,6 +6,7 @@ import { useAppDispatch } from "@/store/hooks";
 import { signIn } from "@/store/slices/authSlice";
 import { setUser } from "@/store/slices/userSlice";
 import { useRouter } from "next/router";
+import { API_ROUTES } from "@/api/APIRoutes";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
@@ -94,7 +95,7 @@ const SignIn = () => {
       setSuccess(false);
 
       try {
-        const res = await fetch("http://localhost:5000/api/auth/login", {
+        const res = await fetch(`${API_ROUTES.AUTH.LOGIN}`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
