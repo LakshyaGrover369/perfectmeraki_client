@@ -153,8 +153,20 @@ const MandalaMirrorsPage: React.FC = () => {
                       description={product.description}
                       originalPrice={product.originalPrice}
                       discountedPrice={product.discountedPrice}
-                      orderLink=""
-                      customizationLink=""
+                      orderLink={`https://api.whatsapp.com/send?phone=918860646364&text=I%20would%20like%20to%20order%20the%20${encodeURIComponent(
+                        product.name
+                      )},%20${encodeURIComponent(
+                        product.type
+                      )}%20from%20your%20website.%20${encodeURIComponent(
+                        product.description
+                      )}`}
+                      customizationLink={`https://api.whatsapp.com/send?phone=918860646364&text=I%20would%20like%20to%20customize%20the%20order%20for%20${encodeURIComponent(
+                        product.name
+                      )},%20${encodeURIComponent(
+                        product.type
+                      )}%20from%20your%20website.%20${encodeURIComponent(
+                        product.description
+                      )}`}
                     />
                   </motion.div>
                 ))

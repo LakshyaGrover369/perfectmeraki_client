@@ -1,212 +1,227 @@
-import Image from "next/image";
-import React, { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import { RoundedCTAButton } from "@/components/common/RoundedCTAButton";
+import React from "react";
+import { motion, useAnimation } from "framer-motion";
+import { useRouter } from "next/router";
+import { useInView } from "react-intersection-observer";
+import { useEffect } from "react";
+import { FiArrowRight } from "react-icons/fi";
 
-// Mock service data with image URLs
-const services = [
-  {
-    id: 1,
-    title: "Handcrafted Mandala Art",
-    description:
-      "Intricately carved wooden mandalas that bring harmony and positive energy to your space.",
-    image:
-      "https://images.unsplash.com/photo-1584735422184-959c2788c455?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+// Animation variants
+const fadeInUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: [0.6, -0.05, 0.01, 0.99],
+      staggerChildren: 0.1,
+    },
   },
-  {
-    id: 2,
-    title: "Lippan Art Revival",
-    description:
-      "Traditional mud relief work reimagined in wood for modern interiors.",
-    image:
-      "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80",
-  },
-  {
-    id: 3,
-    title: "Custom Wooden Nameplates",
-    description:
-      "Personalized nameplates carved with precision for homes, offices, and gifts.",
-    image:
-      "https://images.unsplash.com/photo-1600585152220-90363fe7e115?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-  },
-  {
-    id: 4,
-    title: "Themed Home Décor",
-    description:
-      "Bespoke wooden décor pieces designed to match your aesthetic.",
-    image:
-      "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80",
-  },
-  {
-    id: 5,
-    title: "Creative Art Workshops",
-    description:
-      "Interactive sessions on mandala painting, wood carving, and Lippan art.",
-    image:
-      "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-  },
-  {
-    id: 6,
-    title: "Corporate & Event Décor",
-    description:
-      "Custom wood installations for weddings, offices, and special events.",
-    image:
-      "https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80",
-  },
-];
+};
 
-const Services = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const floatingShapesRef = useRef<(HTMLDivElement | null)[]>([]);
-  const serviceCardsRef = useRef<(HTMLDivElement | null)[]>([]);
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.3,
+    },
+  },
+};
 
-  // Register GSAP plugins
-  gsap.registerPlugin(ScrollTrigger);
+const cardHover = {
+  hover: {
+    y: -10,
+    boxShadow:
+      "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+  },
+};
+
+const Workshops = () => {
+  const router = useRouter();
+  const controls = useAnimation();
+  const [ref, inView] = useInView({
+    threshold: 0.1,
+    triggerOnce: true,
+  });
 
   useEffect(() => {
-    // Floating shapes animation
-    floatingShapesRef.current.forEach((shape, i) => {
-      if (shape) {
-        gsap.to(shape, {
-          y: i % 2 === 0 ? -20 : 20,
-          duration: 4 + i,
-          repeat: -1,
-          yoyo: true,
-          ease: "sine.inOut",
-        });
-      }
-    });
-
-    // Service cards animation on scroll
-    serviceCardsRef.current.forEach((card, i) => {
-      if (card) {
-        gsap.to(card, {
-          scrollTrigger: {
-            trigger: card,
-            start: "top 80%",
-            toggleActions: "play none none none",
-          },
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          delay: i * 0.1,
-          ease: "back.out(1.2)",
-        });
-        // Set initial state
-        gsap.set(card, { opacity: 0, y: 50 });
-      }
-    });
-
-    // Background pulse effect on scroll
-    if (containerRef.current) {
-      gsap.to(containerRef.current, {
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top center",
-          toggleActions: "play none none none",
-        },
-        backgroundColor: "rgba(236, 253, 245, 0.9)",
-        duration: 2,
-      });
+    if (inView) {
+      controls.start("visible");
     }
-  }, []);
+  }, [controls, inView]);
+
+  const workshops = [
+    {
+      name: "Mandala Art on Wood",
+      description:
+        "Unlock inner peace and creativity as you learn to paint intricate mandala designs on wooden bases. Perfect for beginners and art lovers.",
+      color: "bg-teal-100",
+    },
+    {
+      name: "Lippan Art Workshop",
+      description:
+        "Discover the beauty of this traditional Kutch art form, reimagined on wooden boards using mirrors, mud, and vibrant colors.",
+      color: "bg-amber-100",
+    },
+    {
+      name: "Customized Wooden Nameplate Making",
+      description:
+        "Personalize your space with a nameplate designed and painted by you! Great for gifting or adding charm to your home.",
+      color: "bg-rose-100",
+    },
+    {
+      name: "Fridge Magnet Painting",
+      description:
+        "A fun, short-format workshop where you paint tiny wooden magnets—ideal for kids, families, or casual creative breaks.",
+      color: "bg-blue-100",
+    },
+    {
+      name: "Kids Craft Sessions",
+      description:
+        "Specially curated for little artists with safe materials and easy-to-follow techniques that encourage creativity and confidence.",
+      color: "bg-yellow-100",
+    },
+    {
+      name: "Corporate Team-Building Workshops",
+      description:
+        "Interactive, creative sessions perfect for breaking the ice, sparking innovation, and bringing teams together through art.",
+      color: "bg-indigo-100",
+    },
+    {
+      name: "Festival & Themed Workshops",
+      description:
+        "Celebrate Holi, Diwali, Christmas, or any special occasion with themed workshops—add a handmade touch to your festivities.",
+      color: "bg-purple-100",
+    },
+  ];
 
   return (
-    <div
-      ref={containerRef}
-      className="min-h-screen bg-gradient-to-br from-emerald-50 to-green-100 py-16 px-4 sm:px-6 lg:px-8 overflow-hidden relative"
-    >
-      {/* Floating decorative elements */}
-      {[...Array(8)].map((_, i) => (
-        <div
-          key={i}
-          ref={(el) => {
-            floatingShapesRef.current[i] = el;
-          }}
-          className={`absolute hidden md:block ${
-            i % 2 === 0 ? "text-emerald-300" : "text-green-400"
-          }`}
-          style={{
-            top: `${10 + i * 10}%`,
-            left: i < 4 ? `${5 + i * 5}%` : "auto",
-            right: i >= 4 ? `${5 + (i - 4) * 5}%` : "auto",
-            fontSize: `${1 + (i % 3)}rem`,
-            opacity: 0.7,
-          }}
-        >
-          {i % 2 === 0 ? "🍃" : "✨"}
-        </div>
-      ))}
+    <section className="relative w-full flex justify-center items-center pt-12 pb-16 px-6 md:px-16 bg-gradient-to-b from-[#faf9f7] to-[#f5f3f0] overflow-hidden">
+      {/* Decorative elements */}
+      <div className="absolute top-0 left-0 w-full h-full opacity-10">
+        <div className="absolute top-20 left-10 w-40 h-40 rounded-full bg-purple-300 mix-blend-multiply filter blur-xl animate-float"></div>
+        <div className="absolute bottom-10 right-20 w-60 h-60 rounded-full bg-amber-200 mix-blend-multiply filter blur-xl animate-float-delay"></div>
+      </div>
 
-      <div className="max-w-7xl mx-auto relative z-10">
-        {/* Header Section */}
+      <div className="relative text-center max-w-7xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          ref={ref}
+          initial="hidden"
+          animate={controls}
+          variants={fadeInUp}
+          className="mb-16 text-center"
         >
-          <h1 className="text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-green-800 mb-4">
-            Our Craftsmanship
-          </h1>
-          <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
-            Each piece is a labor of love, blending tradition with contemporary
-            artistry.
-          </p>
+          <motion.h1
+            className="text-3xl md:text-5xl md:text-7xl font-bold text-[#2d2926] mb-6 tracking-tight leading-tight"
+            whileHover={{ scale: 1.02 }}
+          >
+            <span className="relative inline-block">
+              <span className="relative z-10">Our Creative</span>
+              <span className="absolute bottom-0 left-0 w-full h-3 bg-amber-200 opacity-40 -z-0"></span>
+            </span>
+            <br />
+            <span className="text-[#63ccbb]">Workshops</span>
+          </motion.h1>
+
+          <motion.p
+            className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed"
+            whileHover={{ scale: 1.01 }}
+          >
+            Explore signature pieces blending tradition with contemporary design
+          </motion.p>
         </motion.div>
 
-        {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, i) => (
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          animate={controls}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+          {workshops.map((item, idx) => (
             <motion.div
-              key={service.id}
-              ref={(el) => {
-                serviceCardsRef.current[i] = el;
-              }}
-              whileHover={{ y: -10 }}
-              className="bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 border border-white/20"
+              key={idx}
+              variants={fadeInUp}
+              whileHover="hover"
+              initial="hidden"
+              animate={controls}
+              className="group relative overflow-hidden"
             >
-              <div className="h-48 overflow-hidden">
-                <Image
-                  src={service.image}
-                  alt={service.title}
-                  width={28}
-                  height={28}
-                  className="w-full h-full object-cover transform hover:scale-105 transition duration-500"
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-emerald-800 mb-2">
-                  {service.title}
+              <motion.div
+                variants={cardHover}
+                className={`h-full p-8 rounded-xl shadow-sm hover:shadow-lg transition-all border border-gray-100 bg-white relative z-10`}
+              >
+                {/* Color accent */}
+                <div
+                  className={`absolute top-0 left-0 w-full h-1 ${item.color}`}
+                ></div>
+
+                <h3 className="text-2xl text-center font-bold text-[#2d2926] mb-3 tracking-tight leading-tight">
+                  {item.name}
                 </h3>
-                <p className="text-gray-600 mb-4">{service.description}</p>
-                <RoundedCTAButton href="/">Explore More</RoundedCTAButton>
-              </div>
+
+                <p className="text-gray-600 text-center mb-6 min-h-[60px]">
+                  {item.description}
+                </p>
+
+                <div className="flex justify-center">
+                  <motion.button
+                    whileHover={{ x: 5 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() =>
+                      router.push(
+                        `/products/${item.name
+                          .toLowerCase()
+                          .replace(/\s+/g, "-")}`
+                      )
+                    }
+                    className="flex text-center items-center gap-2 text-[#2d2926] group-hover:text-[#4a044e] transition-colors font-medium"
+                  >
+                    <span>View Collection</span>
+                    <FiArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </motion.button>
+                </div>
+              </motion.div>
+
+              {/* Decorative background element */}
+              <div
+                className={`absolute inset-0 rounded-xl ${item.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300 -z-0`}
+              ></div>
             </motion.div>
           ))}
-        </div>
-
-        {/* CTA Section */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          className="mt-20 text-center"
-        >
-          <h2 className="text-2xl md:text-3xl font-bold text-emerald-800 mb-4">
-            Ready to Transform Your Space?
-          </h2>
-          <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-            Let’s create something extraordinary together. Book a consultation
-            today!
-          </p>
-          <RoundedCTAButton href="/">Get Started</RoundedCTAButton>
         </motion.div>
       </div>
-    </div>
+
+      {/* Floating decorative elements */}
+      <style jsx global>{`
+        @keyframes float {
+          0%,
+          100% {
+            transform: translateY(0) rotate(0deg);
+          }
+          50% {
+            transform: translateY(-20px) rotate(5deg);
+          }
+        }
+        @keyframes float-delay {
+          0%,
+          100% {
+            transform: translateY(0) rotate(0deg);
+          }
+          50% {
+            transform: translateY(-25px) rotate(-5deg);
+          }
+        }
+        .animate-float {
+          animation: float 8s ease-in-out infinite;
+        }
+        .animate-float-delay {
+          animation: float-delay 10s ease-in-out infinite 2s;
+        }
+      `}</style>
+    </section>
   );
 };
 
-export default Services;
+export default Workshops;

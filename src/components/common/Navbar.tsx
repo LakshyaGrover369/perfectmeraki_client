@@ -10,7 +10,7 @@ import { AnimatedRevealButton } from "./AnimatedRevealButton";
 const navLinks = [
   { name: "Home", href: "/" },
   { name: "About", href: "about" },
-  { name: "Services", href: "services" },
+  { name: "Workshops", href: "workshops" },
   { name: "Products", href: "products" },
   { name: "Product Catalogue", href: "products-catalogue" },
   { name: "Sign In", href: "signin" },
