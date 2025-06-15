@@ -122,7 +122,7 @@ const SignIn = () => {
             })
           );
           setSuccess(true);
-          router.push("/admin/admin-dashboard");
+          router.push("/");
         } else {
           setErrors({ general: "Invalid credentials" });
         }

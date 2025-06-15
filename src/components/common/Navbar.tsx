@@ -2,9 +2,11 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 import perfectmeraki_logo from "../../../public/assets/images/perfectmeraki_logo.jpg";
 import { AnimatedRevealButton } from "./AnimatedRevealButton";
 
+// Original navLinks
 const navLinks = [
   { name: "Home", href: "/" },
   { name: "About", href: "about" },
@@ -19,6 +21,33 @@ const navLinks = [
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const router = useRouter();
+
+  // Get auth state from redux
+  const { isAuthenticated, userDetails } = useSelector(
+    (state: any) => state.auth
+  );
+
+  // Filter navLinks based on auth state
+  const filteredLinks = navLinks.filter((link) => {
+    if (
+      isAuthenticated &&
+      (link.name === "Sign In" || link.name === "Sign Up")
+    ) {
+      return false;
+    }
+    if (
+      link.name === "Admin" &&
+      (!isAuthenticated || userDetails?.role !== "admin")
+    ) {
+      return false;
+    }
+    return link.name !== "Sign In" &&
+      link.name !== "Sign Up" &&
+      link.name !== "Admin"
+      ? true
+      : !isAuthenticated ||
+          (link.name === "Admin" && userDetails?.role === "admin");
+  });
 
   // Helper for internal navigation
   const handleNav = (href: string) => {
@@ -53,7 +82,7 @@ export default function Navbar() {
 
           {/* Desktop Nav */}
           <div className="hidden lg:flex gap-16 ml-7 flex-1 items-center justify-end">
-            {navLinks.map((link) => (
+            {filteredLinks.map((link) => (
               <button
                 key={link.name}
                 type="button"
@@ -72,6 +101,12 @@ export default function Navbar() {
                 </span>
               </button>
             ))}
+            {/* Show Hi {user.name} if authenticated */}
+            {isAuthenticated && userDetails?.name && (
+              <span className="text-base text-[#2d2926] font-sans tracking-tight">
+                Hi {userDetails.name}
+              </span>
+            )}
 
             <div className="flex items-center gap-4">
               <AnimatedRevealButton href="https://wa.link/k2vcjx">
@@ -131,7 +166,7 @@ export default function Navbar() {
           style={{ fontFamily: "Helvetica Neue, Arial, sans-serif" }}
           aria-hidden={!menuOpen}
         >
-          {navLinks.map((link) => (
+          {filteredLinks.map((link) => (
             <button
               key={link.name}
               type="button"
@@ -141,6 +176,12 @@ export default function Navbar() {
               {link.name}
             </button>
           ))}
+          {/* Show Hi {user.name} if authenticated */}
+          {isAuthenticated && userDetails?.name && (
+            <span className="text-lg text-[#2d2926] font-sans tracking-tight">
+              Hi {userDetails.name}
+            </span>
+          )}
           <button
             type="button"
             onClick={() => handleNav("https://wa.link/k2vcjx")}
