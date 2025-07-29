@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import ProductCard from "@/components/common/ProductCard";
-import { FiAlertCircle, FiLoader } from "react-icons/fi";
+// import { FiAlertCircle, FiLoader } from "react-icons/fi";
 import { API_ROUTES } from "@/api/APIRoutes";
 
 type Product = {
@@ -57,7 +57,7 @@ const NameplatesPage: React.FC = () => {
           }
         );
         setProducts(response.data.data || []);
-      } catch (err: any) {
+      } catch {
         setError("Failed to fetch products. Please try again later.");
       } finally {
         setLoading(false);

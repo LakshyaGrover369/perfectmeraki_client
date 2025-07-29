@@ -59,7 +59,7 @@ const MandalaMirrorsPage: React.FC = () => {
         );
         console.log("Fetched products:", response.data);
         setProducts(response.data.data || []);
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error("Error fetching products:", err);
         setError("Failed to fetch products. Please try again later.");
       } finally {

@@ -57,7 +57,7 @@ const FridgeMagnetsPage: React.FC = () => {
           }
         );
         setProducts(response.data.data || []);
-      } catch (err: any) {
+      } catch {
         setError("Failed to fetch products. Please try again later.");
       } finally {
         setLoading(false);

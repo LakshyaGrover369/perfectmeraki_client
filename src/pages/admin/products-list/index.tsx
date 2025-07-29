@@ -225,10 +225,16 @@ const ProductDetails = () => {
                           key={colIndex}
                           className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
                         >
-                          <img
+                          <Image
                             src={product.image}
                             alt={product.name}
+                            width={64}
+                            height={64}
                             className="w-16 h-16 object-cover rounded"
+                            style={{
+                              objectFit: "cover",
+                              borderRadius: "0.5rem",
+                            }}
                           />
                         </td>
                       );
@@ -238,7 +244,7 @@ const ProductDetails = () => {
                         key={colIndex}
                         className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
                       >
-                        {(product as any)[column.accessor]}
+                        {product[column.accessor as keyof Product]}
                       </td>
                     );
                   })}

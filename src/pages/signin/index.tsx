@@ -23,7 +23,9 @@ const SignIn = () => {
   const router = useRouter();
 
   useEffect(() => {
-    let ScrollTrigger: any;
+    let ScrollTrigger:
+      | typeof import("gsap/ScrollTrigger").ScrollTrigger
+      | undefined;
 
     const registerAndAnimate = async () => {
       if (typeof window !== "undefined") {
@@ -60,8 +62,8 @@ const SignIn = () => {
     registerAndAnimate();
 
     return () => {
-      if (ScrollTrigger) {
-        ScrollTrigger.kill && ScrollTrigger.kill();
+      if (ScrollTrigger && typeof ScrollTrigger.getAll === "function") {
+        ScrollTrigger.getAll().forEach((trigger: any) => trigger.kill());
       }
     };
   }, []);

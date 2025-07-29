@@ -22,9 +22,23 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const router = useRouter();
 
+  // Define RootState type for Redux state
+  interface AuthState {
+    isAuthenticated: boolean;
+    userDetails?: {
+      name?: string;
+      role?: string;
+      [key: string]: any;
+    };
+  }
+  interface RootState {
+    auth: AuthState;
+    // add other slices if needed
+  }
+
   // Get auth state from redux
   const { isAuthenticated, userDetails } = useSelector(
-    (state: any) => state.auth
+    (state: RootState) => state.auth
   );
 
   // Filter navLinks based on auth state

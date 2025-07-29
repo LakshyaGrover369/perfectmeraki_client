@@ -12,15 +12,19 @@ const UpdateCatalogue: React.FC = () => {
     setMessage(null);
     try {
       // Replace with your actual API endpoint
-      const response = await axios.post("/api/catalogue/upload", {
+      await axios.post("/api/catalogue/upload", {
         link: catalogueLink,
       });
       setMessage("Catalogue link uploaded successfully!");
       setCatalogueLink("");
-    } catch (error: any) {
-      setMessage(
-        error.response?.data?.message || "Failed to upload catalogue link."
-      );
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        setMessage(
+          error.response?.data?.message || "Failed to upload catalogue link."
+        );
+      } else {
+        setMessage("Failed to upload catalogue link.");
+      }
     } finally {
       setLoading(false);
     }

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-type Props = {};
+type Props = object;
 
 const PRODUCT_TYPES = [
   "nameplates",
@@ -15,7 +15,7 @@ const PRODUCT_TYPES = [
   "key holders",
 ];
 
-const AddProduct = (props: Props) => {
+const AddProduct = () => {
   const [form, setForm] = useState({
     image: "",
     type: "",
@@ -28,11 +28,22 @@ const AddProduct = (props: Props) => {
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
-    const { name, value, files } = e.target as any;
-    setForm((prev) => ({
-      ...prev,
-      [name]: files ? files[0] : value,
-    }));
+    const target = e.target as
+      | HTMLInputElement
+      | HTMLTextAreaElement
+      | HTMLSelectElement;
+    const { name, value } = target;
+    if (target instanceof HTMLInputElement && target.type === "file") {
+      setForm((prev) => ({
+        ...prev,
+        [name]: target.files && target.files[0] ? target.files[0] : "",
+      }));
+    } else {
+      setForm((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {

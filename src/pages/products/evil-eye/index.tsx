@@ -57,7 +57,7 @@ const EvilEyePage: React.FC = () => {
           }
         );
         setProducts(response.data.data || []);
-      } catch (err: any) {
+      } catch (_error: unknown) {
         setError("Failed to fetch products. Please try again later.");
       } finally {
         setLoading(false);
