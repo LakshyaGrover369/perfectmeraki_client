@@ -1,4 +1,8 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { API_ROUTES } from "@/api/APIRoutes";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 const PRODUCT_TYPES = [
   "nameplates",
@@ -14,12 +18,27 @@ const PRODUCT_TYPES = [
 ];
 
 const AddProduct = () => {
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<{
+    image: File | "";
+    type: string;
+    name: string;
+    description: string;
+    originalPrice: string;
+    discountedPrice: string;
+    category: string;
+    stock: string;
+  }>({
     image: "",
     type: "",
     name: "",
     description: "",
+    originalPrice: "",
+    discountedPrice: "",
+    category: "",
+    stock: "",
   });
+
+  const token = useSelector((state: RootState) => state.auth.token);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -44,10 +63,29 @@ const AddProduct = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log(form);
+    const formData = new FormData();
+    if (form.image) formData.append("image", form.image as File);
+    formData.append("type", form.type);
+    formData.append("name", form.name);
+    formData.append("description", form.description);
+    formData.append("originalPrice", form.originalPrice);
+    formData.append("discountedPrice", form.discountedPrice);
+    formData.append("category", form.category);
+    formData.append("stock", form.stock);
+
+    try {
+      const response = await axios.post(API_ROUTES.PRODUCTS.ADD, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log("Product added:", response.data);
+    } catch (err) {
+      console.error("Error adding product:", err);
+    }
   };
 
   return (
@@ -105,6 +143,7 @@ const AddProduct = () => {
             id="image"
             accept="image/*"
             onChange={handleChange}
+            required
             style={{
               padding: "0.5rem",
               border: "1px solid #d1d5db",
@@ -208,6 +247,127 @@ const AddProduct = () => {
               background: "#f9fafb",
               fontSize: "1rem",
               resize: "vertical",
+            }}
+          />
+        </div>
+        <div
+          style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}
+        >
+          <label
+            htmlFor="originalPrice"
+            style={{
+              fontWeight: 500,
+              color: "#374151",
+              marginBottom: "0.2rem",
+            }}
+          >
+            Original Price
+          </label>
+          <input
+            type="number"
+            name="originalPrice"
+            id="originalPrice"
+            value={form.originalPrice}
+            onChange={handleChange}
+            required
+            min="0"
+            placeholder="Enter original price"
+            style={{
+              padding: "0.75rem",
+              border: "1px solid #d1d5db",
+              borderRadius: "0.5rem",
+              background: "#f9fafb",
+              fontSize: "1rem",
+            }}
+          />
+        </div>
+        <div
+          style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}
+        >
+          <label
+            htmlFor="discountedPrice"
+            style={{
+              fontWeight: 500,
+              color: "#374151",
+              marginBottom: "0.2rem",
+            }}
+          >
+            Discounted Price
+          </label>
+          <input
+            type="number"
+            name="discountedPrice"
+            id="discountedPrice"
+            value={form.discountedPrice}
+            onChange={handleChange}
+            required
+            min="0"
+            placeholder="Enter discounted price"
+            style={{
+              padding: "0.75rem",
+              border: "1px solid #d1d5db",
+              borderRadius: "0.5rem",
+              background: "#f9fafb",
+              fontSize: "1rem",
+            }}
+          />
+        </div>
+        <div
+          style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}
+        >
+          <label
+            htmlFor="category"
+            style={{
+              fontWeight: 500,
+              color: "#374151",
+              marginBottom: "0.2rem",
+            }}
+          >
+            Category
+          </label>
+          <input
+            type="text"
+            name="category"
+            id="category"
+            value={form.category}
+            onChange={handleChange}
+            placeholder="Enter category"
+            style={{
+              padding: "0.75rem",
+              border: "1px solid #d1d5db",
+              borderRadius: "0.5rem",
+              background: "#f9fafb",
+              fontSize: "1rem",
+            }}
+          />
+        </div>
+        <div
+          style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}
+        >
+          <label
+            htmlFor="stock"
+            style={{
+              fontWeight: 500,
+              color: "#374151",
+              marginBottom: "0.2rem",
+            }}
+          >
+            Stock
+          </label>
+          <input
+            type="number"
+            name="stock"
+            id="stock"
+            value={form.stock}
+            onChange={handleChange}
+            min="0"
+            placeholder="Enter stock quantity"
+            style={{
+              padding: "0.75rem",
+              border: "1px solid #d1d5db",
+              borderRadius: "0.5rem",
+              background: "#f9fafb",
+              fontSize: "1rem",
             }}
           />
         </div>

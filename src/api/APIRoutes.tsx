@@ -9,7 +9,7 @@ export const API_ROUTES = {
   },
   PRODUCTS: {
     EDIT: (productId: string) => `${BASE_URL}/api/admin/edit/${productId}`,
-    ADD: `${BASE_URL}/api/admin/addProduct`,
+    ADD: `${BASE_URL}/api/admin/createProduct`,
     DELETE: (productId: string) => `${BASE_URL}/api/admin/delete/${productId}`,
     GET_BY_TYPE: `${BASE_URL}/api/admin/getProductsByType`,
   },
