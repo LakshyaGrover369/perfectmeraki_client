@@ -18,16 +18,7 @@ const PRODUCT_TYPES = [
 ];
 
 const AddProduct = () => {
-  const [form, setForm] = useState<{
-    image: File | "";
-    type: string;
-    name: string;
-    description: string;
-    originalPrice: string;
-    discountedPrice: string;
-    category: string;
-    stock: string;
-  }>({
+  const [form, setForm] = useState({
     image: "",
     type: "",
     name: "",
@@ -38,357 +29,164 @@ const AddProduct = () => {
     stock: "",
   });
 
+  const [preview, setPreview] = useState<string | null>(null);
   const token = useSelector((state: RootState) => state.auth.token);
 
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
-  ) => {
-    const target = e.target as
-      | HTMLInputElement
-      | HTMLTextAreaElement
-      | HTMLSelectElement;
-    const { name, value } = target;
-    if (target instanceof HTMLInputElement && target.type === "file") {
-      setForm((prev) => ({
-        ...prev,
-        [name]: target.files && target.files[0] ? target.files[0] : "",
-      }));
+  const handleChange = (e: React.ChangeEvent<any>) => {
+    const { name, value, files } = e.target;
+    if (name === "image" && files && files[0]) {
+      setForm((prev) => ({ ...prev, image: files[0] }));
+      setPreview(URL.createObjectURL(files[0]));
     } else {
-      setForm((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
+      setForm((prev) => ({ ...prev, [name]: value }));
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const formData = new FormData();
-    if (form.image) formData.append("image", form.image as File);
-    formData.append("type", form.type);
-    formData.append("name", form.name);
-    formData.append("description", form.description);
-    formData.append("originalPrice", form.originalPrice);
-    formData.append("discountedPrice", form.discountedPrice);
-    formData.append("category", form.category);
-    formData.append("stock", form.stock);
+    Object.entries(form).forEach(([key, value]) => {
+      if (value) formData.append(key, value as string | Blob);
+    });
 
     try {
-      const response = await axios.post(API_ROUTES.PRODUCTS.ADD, formData, {
+      const res = await axios.post(API_ROUTES.PRODUCTS.ADD, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log("Product added:", response.data);
+      console.log("Product added:", res.data);
     } catch (err) {
-      console.error("Error adding product:", err);
+      console.error(err);
     }
   };
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontFamily: "Inter, sans-serif",
-      }}
-    >
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-emerald-100 flex items-center justify-center p-4 sm:p-6">
       <form
         onSubmit={handleSubmit}
-        style={{
-          background: "#fff",
-          padding: "2.5rem 2rem",
-          borderRadius: "1.25rem",
-          boxShadow: "0 8px 32px rgba(60, 72, 100, 0.15)",
-          width: "100%",
-          maxWidth: "420px",
-          display: "flex",
-          flexDirection: "column",
-          gap: "1.5rem",
-        }}
+        className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 w-full max-w-5xl grid md:grid-cols-2 gap-6 md:gap-8"
       >
-        <h2
-          style={{
-            textAlign: "center",
-            marginBottom: "0.5rem",
-            color: "#4f46e5",
-            letterSpacing: "0.02em",
-            fontWeight: 700,
-          }}
-        >
-          Add New Product
-        </h2>
-        <div
-          style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}
-        >
-          <label
-            htmlFor="image"
-            style={{
-              fontWeight: 500,
-              color: "#374151",
-              marginBottom: "0.2rem",
-            }}
-          >
-            Product Image
-          </label>
+        {/* Image Upload Section */}
+        <div className="flex flex-col items-center justify-center gap-4 border-2 border-dashed border-emerald-300 p-6 rounded-xl bg-emerald-50 hover:border-emerald-500 transition w-full">
+          {preview ? (
+            <img
+              src={preview}
+              alt="Preview"
+              className="rounded-lg shadow-lg max-h-64 w-full object-contain"
+            />
+          ) : (
+            <p className="text-gray-500 text-center">
+              Drag & drop an image here, or click below to select
+            </p>
+          )}
+
+          {/* Hidden File Input */}
           <input
             type="file"
-            name="image"
             id="image"
+            name="image"
             accept="image/*"
             onChange={handleChange}
+            className="hidden"
             required
-            style={{
-              padding: "0.5rem",
-              border: "1px solid #d1d5db",
-              borderRadius: "0.5rem",
-              background: "#f3f4f6",
-            }}
           />
-        </div>
-        <div
-          style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}
-        >
           <label
-            htmlFor="type"
-            style={{
-              fontWeight: 500,
-              color: "#374151",
-              marginBottom: "0.2rem",
-            }}
+            htmlFor="image"
+            className="px-5 py-2 bg-emerald-500 text-white rounded-lg shadow hover:bg-emerald-600 cursor-pointer transition text-sm sm:text-base"
           >
-            Product Type
+            {form.image ? "Change Image" : "Choose Image"}
           </label>
+        </div>
+
+        {/* Form Fields */}
+        <div className="flex flex-col gap-4">
+          <h2 className="text-xl sm:text-2xl font-bold text-emerald-600 mb-2">
+            Add New Product
+          </h2>
+
           <select
             name="type"
-            id="type"
             value={form.type}
             onChange={handleChange}
             required
-            style={{
-              padding: "0.75rem",
-              border: "1px solid #d1d5db",
-              borderRadius: "0.5rem",
-              background: "#f9fafb",
-              fontSize: "1rem",
-            }}
+            className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 w-full"
           >
-            <option value="" disabled>
-              Select product type
-            </option>
+            <option value="">Select Product Type</option>
             {PRODUCT_TYPES.map((type) => (
               <option key={type} value={type}>
                 {type.charAt(0).toUpperCase() + type.slice(1)}
               </option>
             ))}
           </select>
-        </div>
-        <div
-          style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}
-        >
-          <label
-            htmlFor="name"
-            style={{
-              fontWeight: 500,
-              color: "#374151",
-              marginBottom: "0.2rem",
-            }}
-          >
-            Product Name
-          </label>
+
           <input
             type="text"
             name="name"
-            id="name"
+            placeholder="Product Name"
             value={form.name}
             onChange={handleChange}
             required
-            placeholder="Enter product name"
-            style={{
-              padding: "0.75rem",
-              border: "1px solid #d1d5db",
-              borderRadius: "0.5rem",
-              background: "#f9fafb",
-              fontSize: "1rem",
-            }}
+            className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 w-full"
           />
-        </div>
-        <div
-          style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}
-        >
-          <label
-            htmlFor="description"
-            style={{
-              fontWeight: 500,
-              color: "#374151",
-              marginBottom: "0.2rem",
-            }}
-          >
-            Product Description
-          </label>
+
           <textarea
             name="description"
-            id="description"
+            placeholder="Product Description"
             value={form.description}
             onChange={handleChange}
             required
-            placeholder="Describe your product..."
-            rows={4}
-            style={{
-              padding: "0.75rem",
-              border: "1px solid #d1d5db",
-              borderRadius: "0.5rem",
-              background: "#f9fafb",
-              fontSize: "1rem",
-              resize: "vertical",
-            }}
+            rows={3}
+            className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 w-full resize-none"
           />
-        </div>
-        <div
-          style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}
-        >
-          <label
-            htmlFor="originalPrice"
-            style={{
-              fontWeight: 500,
-              color: "#374151",
-              marginBottom: "0.2rem",
-            }}
-          >
-            Original Price
-          </label>
-          <input
-            type="number"
-            name="originalPrice"
-            id="originalPrice"
-            value={form.originalPrice}
-            onChange={handleChange}
-            required
-            min="0"
-            placeholder="Enter original price"
-            style={{
-              padding: "0.75rem",
-              border: "1px solid #d1d5db",
-              borderRadius: "0.5rem",
-              background: "#f9fafb",
-              fontSize: "1rem",
-            }}
-          />
-        </div>
-        <div
-          style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}
-        >
-          <label
-            htmlFor="discountedPrice"
-            style={{
-              fontWeight: 500,
-              color: "#374151",
-              marginBottom: "0.2rem",
-            }}
-          >
-            Discounted Price
-          </label>
-          <input
-            type="number"
-            name="discountedPrice"
-            id="discountedPrice"
-            value={form.discountedPrice}
-            onChange={handleChange}
-            required
-            min="0"
-            placeholder="Enter discounted price"
-            style={{
-              padding: "0.75rem",
-              border: "1px solid #d1d5db",
-              borderRadius: "0.5rem",
-              background: "#f9fafb",
-              fontSize: "1rem",
-            }}
-          />
-        </div>
-        <div
-          style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}
-        >
-          <label
-            htmlFor="category"
-            style={{
-              fontWeight: 500,
-              color: "#374151",
-              marginBottom: "0.2rem",
-            }}
-          >
-            Category
-          </label>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <input
+              type="number"
+              name="originalPrice"
+              placeholder="Original Price"
+              value={form.originalPrice}
+              onChange={handleChange}
+              required
+              className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400"
+            />
+            <input
+              type="number"
+              name="discountedPrice"
+              placeholder="Discounted Price"
+              value={form.discountedPrice}
+              onChange={handleChange}
+              required
+              className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400"
+            />
+          </div>
+
           <input
             type="text"
             name="category"
-            id="category"
+            placeholder="Category"
             value={form.category}
             onChange={handleChange}
-            placeholder="Enter category"
-            style={{
-              padding: "0.75rem",
-              border: "1px solid #d1d5db",
-              borderRadius: "0.5rem",
-              background: "#f9fafb",
-              fontSize: "1rem",
-            }}
+            className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400"
           />
-        </div>
-        <div
-          style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}
-        >
-          <label
-            htmlFor="stock"
-            style={{
-              fontWeight: 500,
-              color: "#374151",
-              marginBottom: "0.2rem",
-            }}
-          >
-            Stock
-          </label>
+
           <input
             type="number"
             name="stock"
-            id="stock"
+            placeholder="Stock Quantity"
             value={form.stock}
             onChange={handleChange}
-            min="0"
-            placeholder="Enter stock quantity"
-            style={{
-              padding: "0.75rem",
-              border: "1px solid #d1d5db",
-              borderRadius: "0.5rem",
-              background: "#f9fafb",
-              fontSize: "1rem",
-            }}
+            className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400"
           />
+
+          <button
+            type="submit"
+            className="mt-2 py-3 bg-gradient-to-r from-emerald-500 to-green-500 text-white font-semibold rounded-lg shadow-lg hover:scale-105 transform transition w-full"
+          >
+            Add Product
+          </button>
         </div>
-        <button
-          type="submit"
-          style={{
-            marginTop: "0.5rem",
-            padding: "0.85rem",
-            background: "linear-gradient(90deg, #6366f1 0%, #818cf8 100%)",
-            color: "#fff",
-            fontWeight: 600,
-            fontSize: "1.1rem",
-            border: "none",
-            borderRadius: "0.75rem",
-            cursor: "pointer",
-            boxShadow: "0 2px 8px rgba(99, 102, 241, 0.12)",
-            transition: "background 0.2s",
-          }}
-        >
-          Add Product
-        </button>
       </form>
     </div>
   );
