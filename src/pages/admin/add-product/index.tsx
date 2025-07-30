@@ -3,6 +3,7 @@ import axios from "axios";
 import { API_ROUTES } from "@/api/APIRoutes";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import Image from "next/image";
 
 const PRODUCT_TYPES = [
   "nameplates",
@@ -18,7 +19,16 @@ const PRODUCT_TYPES = [
 ];
 
 const AddProduct = () => {
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<{
+    image: string | File;
+    type: string;
+    name: string;
+    description: string;
+    originalPrice: string;
+    discountedPrice: string;
+    category: string;
+    stock: string;
+  }>({
     image: "",
     type: "",
     name: "",
@@ -32,8 +42,17 @@ const AddProduct = () => {
   const [preview, setPreview] = useState<string | null>(null);
   const token = useSelector((state: RootState) => state.auth.token);
 
-  const handleChange = (e: React.ChangeEvent<any>) => {
-    const { name, value, files } = e.target;
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    const target = e.target as
+      | HTMLInputElement
+      | HTMLSelectElement
+      | HTMLTextAreaElement;
+    const { name, value } = target;
+    const files = (target as HTMLInputElement).files;
     if (name === "image" && files && files[0]) {
       setForm((prev) => ({ ...prev, image: files[0] }));
       setPreview(URL.createObjectURL(files[0]));
@@ -71,7 +90,7 @@ const AddProduct = () => {
         {/* Image Upload Section */}
         <div className="flex flex-col items-center justify-center gap-4 border-2 border-dashed border-emerald-300 p-6 rounded-xl bg-emerald-50 hover:border-emerald-500 transition w-full">
           {preview ? (
-            <img
+            <Image
               src={preview}
               alt="Preview"
               className="rounded-lg shadow-lg max-h-64 w-full object-contain"
