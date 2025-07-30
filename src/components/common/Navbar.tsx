@@ -28,7 +28,7 @@ export default function Navbar() {
     userDetails?: {
       name?: string;
       role?: string;
-      [key: string]: any;
+      [key: string]: unknown;
     };
   }
   interface RootState {

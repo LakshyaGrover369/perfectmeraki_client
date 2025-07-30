@@ -57,7 +57,7 @@ const KitchenDecorPage: React.FC = () => {
           }
         );
         setProducts(response.data.data || []);
-      } catch (_error: unknown) {
+      } catch {
         setError("Failed to fetch products. Please try again later.");
       } finally {
         setLoading(false);

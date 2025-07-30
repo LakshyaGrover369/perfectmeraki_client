@@ -63,7 +63,10 @@ const SignIn = () => {
 
     return () => {
       if (ScrollTrigger && typeof ScrollTrigger.getAll === "function") {
-        ScrollTrigger.getAll().forEach((trigger: any) => trigger.kill());
+        ScrollTrigger.getAll().forEach(
+          (trigger: import("gsap/ScrollTrigger").ScrollTrigger) =>
+            trigger.kill()
+        );
       }
     };
   }, []);

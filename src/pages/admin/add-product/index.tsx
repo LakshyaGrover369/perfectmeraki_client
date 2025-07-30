@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 
-type Props = object;
-
 const PRODUCT_TYPES = [
   "nameplates",
   "spiritual hangings",

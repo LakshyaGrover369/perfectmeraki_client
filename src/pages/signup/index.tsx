@@ -39,7 +39,9 @@ const SignUp = () => {
   const floatingShapesRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    let ScrollTrigger: any;
+    let ScrollTrigger:
+      | typeof import("gsap/ScrollTrigger").ScrollTrigger
+      | undefined;
 
     const registerAndAnimate = async () => {
       if (typeof window !== "undefined") {
@@ -74,13 +76,6 @@ const SignUp = () => {
     };
 
     registerAndAnimate();
-
-    return () => {
-      if (ScrollTrigger && ScrollTrigger.kill) {
-        ScrollTrigger.kill();
-      }
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -149,11 +144,10 @@ const SignUp = () => {
       } catch (error: unknown) {
         setErrors({
           general:
-            (error as any)?.response?.data?.message ||
-            "Network error. Please try again.",
+            (error as { response?: { data?: { message?: string } } })?.response
+              ?.data?.message || "Network error. Please try again.",
         });
         console.error("Registration error:", error);
-      } finally {
         setIsSubmitting(false);
       }
     }
