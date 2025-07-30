@@ -13,6 +13,9 @@ export const API_ROUTES = {
     DELETE: (productId: string) => `${BASE_URL}/api/admin/delete/${productId}`,
     GET_BY_TYPE: `${BASE_URL}/api/admin/getProductsByType`,
   },
+  WORKSHOPS: {
+    GET_BY_TYPE: `${BASE_URL}/api/admin/getWorkshopsByType`,
+  },
   AUTH: {
     LOGIN: `${BASE_URL}/api/auth/login`,
     REGISTER: `${BASE_URL}/api/auth/register`,
