@@ -2,7 +2,7 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import perfectmeraki_logo from "../../../public/assets/images/perfectmeraki_logo.jpg";
 import { AnimatedRevealButton } from "./AnimatedRevealButton";
 
@@ -34,6 +34,7 @@ const WHATS_APP_HELP_URL = "https://wa.link/odndf9";
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const router = useRouter();
+  const dispatch = useDispatch();
 
   // 4️⃣  Auth state
   const { isAuthenticated, userDetails } = useSelector(
@@ -93,11 +94,26 @@ export default function Navbar() {
                   </span>
                 </button>
               ))}
-
               {isAuthenticated && userDetails?.name && (
-                <span className="text-sm text-[#2d2926]">
-                  Hi {userDetails.name}
-                </span>
+                <>
+                  <span className="text-sm text-[#2d2926]">
+                    Hi {userDetails.name}
+                  </span>
+                  <button
+                    onClick={() => {
+                      dispatch({ type: "LOGOUT" });
+                      if (typeof window !== "undefined") {
+                        window.localStorage.clear();
+                        window.sessionStorage.clear();
+                        window.location.reload();
+                      }
+                      router.push("/signin");
+                    }}
+                    className="ml-3 px-3 py-1 rounded bg-[#e0d6c5] text-[#2d2926] text-xs hover:bg-[#63ccbb] hover:text-white transition"
+                  >
+                    Log out
+                  </button>
+                </>
               )}
 
               <AnimatedRevealButton href={WHATS_APP_URL}>
