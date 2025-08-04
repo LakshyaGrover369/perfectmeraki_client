@@ -21,6 +21,8 @@ export const API_ROUTES = {
     REGISTER: `${BASE_URL}/api/auth/register`,
   },
   CATALOGUE: {
-    UPDATE: `${BASE_URL}/api/admin/updateCatalogue`,
+    GET_BY_NAME: `${BASE_URL}/api/admin/getLinksByName`,
+    CREATE: `${BASE_URL}/api/admin/createLinks`,
+    UPDATE: `${BASE_URL}/api/admin/updateLinksByName`,
   },
 };

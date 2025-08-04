@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { API_ROUTES } from "@/api/APIRoutes"; // Adjust the path as needed
 import { motion } from "framer-motion";
 import { FiUpload, FiLink, FiCheckCircle, FiAlertCircle } from "react-icons/fi";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 const UpdateCatalogue: React.FC = () => {
   const [catalogueLink, setCatalogueLink] = useState("");
@@ -11,6 +14,7 @@ const UpdateCatalogue: React.FC = () => {
     type: "success" | "error";
   } | null>(null);
   const [isFocused, setIsFocused] = useState(false);
+  const token = useSelector((state: RootState) => state.auth.token);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,11 +25,23 @@ const UpdateCatalogue: React.FC = () => {
 
     try {
       // Replace with your actual API endpoint
-      await axios.post("/api/catalogue/upload", {
-        link: catalogueLink,
-      });
-      setMessage({ text: "Catalogue updated successfully!", type: "success" });
-      setCatalogueLink("");
+      const res = await axios.put(
+        API_ROUTES.CATALOGUE.UPDATE,
+        { name: "flipbook", link: catalogueLink },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (res.status === 200) {
+        setMessage({
+          text: "Catalogue updated successfully!",
+          type: "success",
+        });
+        setCatalogueLink("");
+      }
     } catch (error: unknown) {
       const errorMessage = axios.isAxiosError(error)
         ? error.response?.data?.message || "Failed to update catalogue."
