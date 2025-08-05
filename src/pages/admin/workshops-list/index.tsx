@@ -6,7 +6,6 @@ import paintingLoader from "../../../../public/assets/gifs/paint_loader.gif";
 import { API_ROUTES } from "@/api/APIRoutes";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/store/store";
-import { useRouter } from "next/router";
 
 interface Workshop {
   _id: string;
