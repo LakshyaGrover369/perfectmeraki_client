@@ -5,11 +5,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FiMenu, FiX } from "react-icons/fi";
 
 const sidebarItems = [
-  // { label: "Dashboard", icon: "🏠", route: "/admin/admin-dashboard" },
+  { label: "Dashboard", icon: "🏠", route: "/admin/admin-dashboard" },
   { label: "Users", icon: "👥", route: "/admin/users-list" },
   { label: "Update Catalogue", icon: "📚", route: "/admin/update-catalogue" },
   { label: "Add Products", icon: "➕", route: "/admin/add-product" },
+  { label: "Add Workshops", icon: "➕", route: "/admin/add-workshop" },
   { label: "Products List", icon: "📋", route: "/admin/products-list" },
+  { label: "Workshops List", icon: "📋", route: "/admin/workshops-list" },
 ];
 
 const AdminSidebar: React.FC = () => {

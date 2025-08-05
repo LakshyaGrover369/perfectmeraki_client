@@ -14,7 +14,15 @@ export const API_ROUTES = {
     GET_BY_TYPE: `${BASE_URL}/api/admin/getProductsByType`,
   },
   WORKSHOPS: {
-    GET_BY_TYPE: `${BASE_URL}/api/admin/getWorkshopsByType`,
+    ADD: `${BASE_URL}/api/admin/createWorkshop`,
+    DELETE: (workshopId: string) =>
+      `${BASE_URL}/api/admin/delete/${workshopId}`,
+    EDIT: (workshopId: string) =>
+      `${BASE_URL}/api/admin/updateWorkshop/${workshopId}`,
+    GET_BY_TYPE: (workshop_type?: string) =>
+      workshop_type
+        ? `${BASE_URL}/api/admin/getWorkshopByType?type=${workshop_type}`
+        : `${BASE_URL}/api/admin/getWorkshopByType`,
   },
   AUTH: {
     LOGIN: `${BASE_URL}/api/auth/login`,
