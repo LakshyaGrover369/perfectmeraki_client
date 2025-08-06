@@ -8,6 +8,28 @@ import {
 import { MdEmail } from "react-icons/md";
 import { IoCall } from "react-icons/io5";
 
+const WORKSHOP_TYPES = [
+  "corperate team building",
+  "festival themed",
+  "fridge magnets",
+  "kids",
+  "lipan art",
+  "mandala",
+  "nameplate",
+];
+const PRODUCT_TYPES = [
+  "nameplates",
+  "spiritual hangings",
+  "kitchen decor",
+  "fridge magnets",
+  "danglers",
+  "evil eye",
+  "jarokha",
+  "mandala mirrors",
+  "kids special",
+  "key holders",
+];
+
 export default function Footer() {
   const router = useRouter();
 
@@ -15,7 +37,7 @@ export default function Footer() {
     <footer className="relative z-10 bg-black text-white pt-16 pb-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-12">
           {/* Brand Info */}
           <div className="space-y-6">
             <button
@@ -107,52 +129,51 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Services */}
+          {/* Services Section */}
           <div>
             <h3 className="text-lg font-semibold mb-6 text-white">
-              Our Services
+              Our Workshops
+            </h3>
+            <ul className="space-y-3 mb-8">
+              {WORKSHOP_TYPES.map((workshop) => (
+                <li key={workshop}>
+                  <button
+                    onClick={() =>
+                      router.push(
+                        `/workshops/${workshop
+                          .toLowerCase()
+                          .replace(/\s+/g, "-")}`
+                      )
+                    }
+                    className="text-gray-400 hover:text-emerald-400 transition-colors duration-300 text-sm text-left w-full capitalize"
+                  >
+                    {workshop}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold mb-6 text-white">
+              Our Products
             </h3>
             <ul className="space-y-3">
-              <li>
-                <button
-                  onClick={() => router.push("/services/web-development")}
-                  className="text-gray-400 hover:text-emerald-400 transition-colors duration-300 text-sm text-left w-full"
-                >
-                  Web Development
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => router.push("/services/ui-ux-design")}
-                  className="text-gray-400 hover:text-emerald-400 transition-colors duration-300 text-sm text-left w-full"
-                >
-                  UI/UX Design
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => router.push("/services/mobile-apps")}
-                  className="text-gray-400 hover:text-emerald-400 transition-colors duration-300 text-sm text-left w-full"
-                >
-                  Mobile Applications
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => router.push("/services/digital-marketing")}
-                  className="text-gray-400 hover:text-emerald-400 transition-colors duration-300 text-sm text-left w-full"
-                >
-                  Digital Marketing
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => router.push("/services/branding")}
-                  className="text-gray-400 hover:text-emerald-400 transition-colors duration-300 text-sm text-left w-full"
-                >
-                  Branding
-                </button>
-              </li>
+              {PRODUCT_TYPES.map((product) => (
+                <li key={product}>
+                  <button
+                    onClick={() =>
+                      router.push(
+                        `/products/${product
+                          .toLowerCase()
+                          .replace(/\s+/g, "-")}`
+                      )
+                    }
+                    className="text-gray-400 hover:text-emerald-400 transition-colors duration-300 text-sm text-left w-full capitalize"
+                  >
+                    {product}
+                  </button>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -190,7 +211,7 @@ export default function Footer() {
               </div>
               <div>
                 <p className="text-gray-400 text-sm">Call Us</p>
-                <p className="text-white font-medium">+1 (555) 123-4567</p>
+                <p className="text-white font-medium">+91 8860646364</p>
               </div>
             </div>
             <div className="flex items-center space-x-4">
@@ -222,7 +243,7 @@ export default function Footer() {
               <div>
                 <p className="text-gray-400 text-sm">Visit Us</p>
                 <p className="text-white font-medium">
-                  123 Design St, Creative City
+                  Sector - 17 , Rohini , Delhi
                 </p>
               </div>
             </div>

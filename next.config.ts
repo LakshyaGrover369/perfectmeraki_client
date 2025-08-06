@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
       "images.unsplash.com",
       "example.com",
       "res.cloudinary.com",
+      "images.remotePatterns"
     ],
   },
 };
