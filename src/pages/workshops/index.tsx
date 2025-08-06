@@ -177,7 +177,7 @@ const Workshops = () => {
                     whileHover={{ x: 5 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() =>
-                      router.push(`/workshops/${(item as any).type.toLowerCase()}`
+                      router.push(`/workshops/${item.type.toLowerCase()}`
                       )
                     }
                     className="flex text-center items-center gap-2 text-[#2d2926] group-hover:text-[#4a044e] transition-colors font-medium"

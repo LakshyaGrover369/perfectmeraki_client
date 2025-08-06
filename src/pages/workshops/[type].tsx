@@ -112,7 +112,7 @@ export default function WorkshopTypePage() {
           </div>
         ) : (
           <div className="space-y-16">
-            {workshops.map((workshop, index) => (
+            {workshops.map((workshop) => (
               <div
                 key={workshop._id}
                 className="bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl"

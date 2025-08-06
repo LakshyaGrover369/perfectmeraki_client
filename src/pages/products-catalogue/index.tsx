@@ -31,7 +31,7 @@ const ProductPage = () => {
     };
 
     fetchLink();
-  }, []);
+  }, [token]);
 
   // if (!link) return <div>Loading...</div>;
 
