@@ -1,9 +1,6 @@
 import { useRouter } from "next/router";
 import {
   FaInstagram,
-  FaTwitter,
-  FaLinkedin,
-  FaPinterest,
   FaWhatsapp,
   FaYoutube,
 } from "react-icons/fa";
