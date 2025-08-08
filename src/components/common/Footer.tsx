@@ -4,6 +4,8 @@ import {
   FaTwitter,
   FaLinkedin,
   FaPinterest,
+  FaWhatsapp,
+  FaYoutube,
 } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { IoCall } from "react-icons/io5";
@@ -54,28 +56,28 @@ export default function Footer() {
             </p>
             <div className="flex space-x-4">
               <a
-                href="#"
+                href="https://www.instagram.com/perfectmeraki?igsh=M3kzdGhubmE2MXRv"
                 className="text-gray-400 hover:text-emerald-400 transition-colors duration-300"
               >
                 <FaInstagram className="w-5 h-5" />
               </a>
-              <a
+              {/* <a
                 href="#"
                 className="text-gray-400 hover:text-green-500 transition-colors duration-300"
               >
                 <FaTwitter className="w-5 h-5" />
-              </a>
+              </a>*/}
               <a
-                href="#"
+                href="https://wa.me/8860646364"
                 className="text-gray-400 hover:text-green-600 transition-colors duration-300"
               >
-                <FaLinkedin className="w-5 h-5" />
-              </a>
+                <FaWhatsapp className="w-5 h-5" />
+              </a> 
               <a
-                href="#"
+                href="https://youtube.com/@perfectmerakii?si=aQbsG6Vgw_kLoBUa"
                 className="text-gray-400 hover:text-emerald-500 transition-colors duration-300"
               >
-                <FaPinterest className="w-5 h-5" />
+                <FaYoutube className="w-5 h-5" />
               </a>
             </div>
           </div>
@@ -221,7 +223,7 @@ export default function Footer() {
               <div>
                 <p className="text-gray-400 text-sm">Email Us</p>
                 <p className="text-white font-medium">
-                  hello@perfectmeraki.com
+                  perfectmerakii@gmail.com
                 </p>
               </div>
             </div>
